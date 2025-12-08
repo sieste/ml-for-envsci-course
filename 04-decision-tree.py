@@ -30,6 +30,8 @@ ax.set_ylabel("x2")
 plt.show()
 
 
+
+
 # ICS tree data set
 url = "https://archive.ics.uci.edu/static/public/31/covertype.zip"
 target_dir = "data/covertype" # change as needed
@@ -114,6 +116,77 @@ tree.plot_tree(clf,
     filled=True, rounded=True,
     fontsize=8
 )
+plt.show()
+
+
+# decision stump on feature 1 by information gain maximisation
+n = 10000
+inds = np.arange(0, n)
+xx1 = np.sort(X[inds,0])
+yy = y[inds]
+y_bar = np.mean(yy)
+gini_full = 1 - y_bar**2 - (1 - y_bar)**2 # around 0.47
+
+midpoints = 0.5 * (xx1[1:] + xx1[:-1])
+gini_split = []
+for threshold in midpoints:
+  mask = (xx1 <= threshold)
+  y_left, y_right = yy[mask], yy[~mask]
+  y_bar_left, y_bar_right = np.mean(y_left), np.mean(y_right)
+  n_left, n_right = len(y_left), len(y_right)
+  gini_left = 1 - y_bar_left**2 - (1 - y_bar_left)**2
+  gini_right = 1 - y_bar_right**2 - (1 - y_bar_right)**2
+  gini_split.append(n_left/n * gini_left + n_right/n * gini_right)
+
+information_gain = gini_full - gini_split
+threshold = midpoints[ information_gain == np.max(information_gain) ][0]
+
+# plot target vs feature 1, vertical jitter for better visibility
+jitter = np.random.uniform(-.05, .05, size=len(yy))
+plt.figure(figsize=(7,3))
+plt.plot(xx1, yy + jitter, 'ok', markersize=.5)
+plt.tight_layout()
+plt.yticks([0,1])
+plt.xlabel('feature 1')
+plt.ylabel('target')
+plt.tight_layout()
+plt.show()
+
+# plot information gain vs threshold and indicate threshold choice that
+# maximises IG
+plt.figure(figsize=(7,4))
+plt.plot(midpoints, gini_full - gini_split, '-k')
+plt.axvline(x=threshold, ymin=0, ymax=1)
+plt.xlabel('feature 1 threshold')
+plt.ylabel('information gain')
+plt.show()
+
+
+# plot histogram of targets before splitting
+fig, ax = plt.subplots(1,1, figsize=(7,3))
+ax.hist(yy, bins=[-.5,.5,1.5], rwidth=.9)
+ax.set_xticks([0,1])
+ax.set_xlabel('target')
+ax.set_ylabel('frequency')
+ax.set_title('all data')
+plt.tight_layout()
+plt.show()
+
+
+# plot histograms of targets after splitting
+fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(7,4))
+ax0.hist(yy[ xx1 <= threshold ], bins=[-.5, .5, 1.5], rwidth=.9)
+ax0.set_xticks([0,1])
+ax0.set_ylim([0, 4500])
+ax0.set_xlabel('target')
+ax0.set_ylabel('frequency')
+ax0.set_title('x1 <= threshold')
+ax1.hist(yy[ xx1 > threshold ], bins=[-.5, .5, 1.5], rwidth=.9)
+ax1.set_xticks([0,1])
+ax1.set_ylim([0, 4500])
+ax1.set_xlabel('target')
+ax1.set_title('x1 > threshold')
+plt.tight_layout()
 plt.show()
 
 
