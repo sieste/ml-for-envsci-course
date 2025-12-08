@@ -1,0 +1,22 @@
+\frametitle{Visualising trained decision trees}
+\begin{minipage}{.4\textwidth}
+\begin{lstlisting}[language=python]
+from sklearn import tree
+clf = DecisionTreeClassifier(
+        max_depth=3)
+clf.fit(X, y)
+plt.figure(figsize=(10, 6))
+tree.plot_tree(clf,
+  feature_names=["altitude",
+                 "aspect"],
+  class_names=["not_fir",
+               "fir"],
+  filled=True,
+  rounded=True,
+  fontsize=8)
+plt.show()
+\end{lstlisting}
+\end{minipage}%
+\begin{minipage}{.6\textwidth}
+\includegraphics[width=\textwidth]{fig/tree-vis.png}
+\end{minipage}%

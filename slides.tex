@@ -1,0 +1,510 @@
+\documentclass{beamer}
+
+\input{preamble.tex}
+
+
+\title{Introduction to Machine Learning for Environmental Science}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+This 2-day workshop introduces core concepts of machine learning
+including common algorithms, standard workflows and key software
+libraries. The focus will be on supervised machine learning for
+regression and classification using a range of methods such as random
+forests and deep convolutional neural networks. The material will be
+taught through a mix of theory and practical examples across different
+environmental sciences such as meteorology and ecology.
+\end{frame}
+
+\section{Introduction}
+
+\subsection{Supervised ML}
+
+
+
+\begin{frame}{Supervised machine learning}
+\begin{itemize}
+\item We usually have an target (outcome) measurement that we wish to predict. 
+\item The prediction should be based on a set of features (inputs). 
+\item For example
+\begin{itemize}
+\item predict future temperature based on current temperature, pressure and wind speed 
+\item predict occurrence of wildfire based on measures of heat, drought and wind 
+\item predict crop yield based on precipitation, temperature, soil nutrients, pests.
+\end{itemize}
+\item The goal of supervised ML is to build a model that predicts outcomes based on available features in new, previously unseen situations.
+\item A "good" model is one that produces accurate predictions.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Regression and classification}
+\begin{itemize}
+\item The nature of the target variable determines the type of ML problem.
+\item Regression: Predicting quantitative outcomes. 
+\begin{itemize}
+\item For example: temperature in degrees, crop yield in tonnes, number of sharks, precipitation amount in mm
+\end{itemize}
+\item Classification: Predicting categorical outcomes. 
+\begin{itemize}
+\item For example: wildfire occurrence, temperature below zero, precipitation type (rain/snow/hail), precipitation amount none/low/medium/high
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\subsection{Model training}
+
+
+\begin{frame}{Function approximation}
+\begin{itemize}
+\item A ML model is a prediction rule that translates one or more features \(x_1, x_2, \dots\) into an estimate \(\hat{y}\) of the target \(y\).
+\item The prediction rule is usually calculated by a specific mathematical function \[\hat{y} = f(x_1, x_2, \dots)\]
+\item The function \(f(\dots)\) usually includes one or many parameters \(\theta_1, \theta_2, \dots\) that control how the function translates inputs to outputs.
+\item Defining the feature vector \(\fat{x} = (x_1, x_2, \dots)\) and parameter vector \(\fat{\theta}=(\theta_1, \theta_2, \dots)\) a ML model is often compactly written as \[\hat{y} = f(\fat{x}; \fat\theta)\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Training data}
+\begin{itemize}
+\item Supervised ML works by "learning from examples".
+\item Training data set is a set of input-output examples \[S = \left\{(\fat{x}_i, y_i)\right\}_{i=1}^n\] where
+\begin{itemize}
+\item \(\fat{x}_i = (x_{i,1}, x_{i,2}, \dots, x_{i,k})\) is the feature vector (containing \(k\) features) in the \(i\)-th example
+\item \(y_i\) is the outcome in the \(i\)-th example
+\item \(n\) is the sample size
+\end{itemize}
+\item The training data set \(S\) is used to build our prediction model to predict a new outcome \(y^*\) based on a feature vector \(\fat{x}^*\).
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Empirical loss minimisation}
+\begin{itemize}
+\item Model training is achieved by 
+\begin{itemize}
+\item trying to find model parameters \(\fat\theta\) such that
+\item the model outputs \(\hat{y}_1, ..., \hat{y}_n\) calculated from \(\fat{x}_1, \dots, \fat{x}_n\) 
+\item are as "close" as possible to the training targets \(y_1, \dots, y_n\)
+\item where closeness is measured by the loss function \(L(\hat{y}, y)\)
+\end{itemize}
+\[\hat{\fat\theta} = \underset{\fat\theta}{\mathrm{argmin}}\sum_{i=1}^n L(f(\fat{x}_i; \fat\theta), y_i)\]
+\item The trained model can then be used to make predictions \(\hat{y}^*\) for new outcomed \(y^*\) based on new feature vectors \(\fat{x}^*\)
+\[\hat{y}^* = f(\fat{x}^*; \hat{\fat\theta})\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{In summary ...}
+To train a ML model by empirical loss minimisation we need:
+\begin{itemize}
+\item a training data set \(S\) containing \(n\) examples of inputs and corresponding outcomes
+\item a model function with trainable parameters \(\fat\theta\) that translates inputs \(\fat{x}\) into an output \(\hat{y}\)
+\item a loss function that quantifies how close model output \(\hat{y}\) is to the target outcome \(y\)
+\item a mechanism to find parameters that minimise the loss 
+\end{itemize}
+\end{frame}
+
+\subsection{Examples, model evaluation}
+
+
+\begin{frame}{Example: Linear regression}
+\begin{itemize}
+\item Training features \(x_1, \dots, x_n\) are temperatures at different times \(t_1, \dots, t_n\)
+\item Training targets \(y_1, \dots, y_n\) are temperatures a short time \(\Delta\) later \(t_1 + \Delta, \dots, t_n + \Delta\)
+\item Model function is a linear function with intercept \(\theta_1\) and slope \(\theta_2\), such that \[\hat{y} = f(x; \fat\theta) = \theta_1 + \theta_2 \cdot x\]
+\item Our loss function is the squared-error loss \[L(\hat{y}, y) = (\hat{y} - y)^2\]
+\item Optimisation: exaustive search over a grid of parameter values (don't do this in practice!)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Linear regression}
+\begin{center}
+\includegraphics[width=.28\textwidth]{fig/linreg-xy.png}
+\includegraphics[width=.3\textwidth]{fig/linreg-xyplot1.png}
+\end{center}
+
+\begin{center}
+\includegraphics[width=.37\textwidth]{fig/linreg-thetaheatmap.png}
+\includegraphics[width=.35\textwidth]{fig/linreg-xyplot2.png}
+\includegraphics[width=.25\textwidth]{fig/linreg-xyyhat.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Machine Learning in python with \texttt{scikit-learn}}
+\begin{center}
+\texttt{https://scikit-learn.org}
+\includegraphics[width=\textwidth]{fig/sklearn.png}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Linear Regression in Scikit-Learn}
+\begin{lstlisting}[language=python]
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+# load file
+t7110 = np.loadtxt("t7110.dat", comments="#")
+
+# extract features (july temperatures) and targets (august temperatures)
+x = t7110[:, 7]
+y = t7110[:, 8]
+
+# sklearn expects k features to be stored in a 2d array with k columns
+x = x.reshape(-1, 1)   
+
+# initialise a linear regression model
+model = LinearRegression()
+
+# fit the model to data
+model.fit(x, y)
+
+# extract parameter estimates from fitted model
+theta_hat = np.array([model.intercept_, model.coef_[0] ])
+
+# calculate predictions in training data
+y_hat = model.predict(x)
+
+# calculate predictions on new data
+x_new = np.linspace(15, 20, 100).reshape(-1,1)
+y_new = model.predict(x_new)
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}{How good is my model?}
+\begin{itemize}
+\item The model outputs \(\hat{y}_1, \dots, \hat{y}_n\) be compared to the targets \(y_1, \dots, y_n\) using a suitable error metric.
+\item For example root mean squared error (RMSE) \[RMSE = \sqrt{\frac1n \sum_{i=1}^n (\hat{y}_i - y_i)^2}\]
+\item Our model has \(RMSE \approx 0.9\) -- Is that "good"?
+\item Getting \(RMSE > 0\) means our model is not perfect, but how bad is it?
+\item To judge whether the model is useful we should compare it to a suitable benchmark. 
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Benchmarking}
+\begin{itemize}
+\item A benchmark model (or reference model) for performance evaluation is usually one or several of
+\begin{itemize}
+\item An alternative (competing) model for the same target.
+\item Climatology (constant mean): \[\hat{y}^{(clim)}_i = \frac1n \sum_{i=1}^n y_i\]
+\item Persistence (last available observation of the target); here: \[\hat{y}^{(pers)}_i = x_i\]
+\item Any other simple estimate of the target that could be calculated with reasonable effort given the same inputs as our model.
+\item In fact, linear regression itself is often a good reference to benchmark more complicated ML model.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Skill scores}
+\begin{itemize}
+\item Given a suitable error metric, we calculate
+\begin{itemize}
+\item \(S\): the error of our model (averaged over a test data set)
+\item \(S_{ref}\): the mean error of our chosen reference model 
+\item \(S_{perf}\): the mean error or a hypothetical perfect model that outputs \(\hat{y}_i = y_i\) each time; (usually \(S_{perf} = 0\))
+\end{itemize}
+\item The skill score of our model relative to the benchmark is then defined as
+\[Skill = \frac{S_{ref} - S}{S_{ref} - S_{perf}}\]
+\item \(Skill \le 0\): Our model is not better than the benchmark.
+\item \(Skill \in (0, 1)\): Our model improves over the benchmark. 
+\item \(Skill = 1\): Our model is perfect.
+\end{itemize}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Example: k-nearest-neighbor classification}
+\begin{itemize}
+\item given an input \(\fat{x}^*\) find the \(k\) closest features \(\fat{x}^{(1)}, \dots, \fat{x}^{(k)}\) in the training data, and the corresponding outcomes \(y^{(1)}, \dots, y^{(k)}\)
+\item "closeness" between the feature vectors \(\fat{x}^{(i)}\) and \(\fat{x}^{(j)}\) is defined in terms of the Euclidean distance \(\sqrt{\sum_m (x^{(i)}_m - x^{(j)}_m)^2}\)
+\item predict \(\hat{y}^*\) as the majority vote over \(y^{(1)}, \dots, y^{(k)}\)
+\item ties are resolved by picking the outcome class lowest value or alphabetical rank
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Example: k-nearest-neighbor classification}
+\begin{itemize}
+\item For illustration we use data from the "Palmer Penguin" data.
+\item Features are penguins' bill length (\(x_1\)) and bill depth (\(x_2\)) and outcome (\(y\)) is the penguin's sex (male or female).
+\item The kNN classifier (\(k=5\)) separates the \(x_1\)/\(x_2\) plane into regions for "female" and "male", separated by a decision boundary.
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=.4\textwidth]{fig/knn-data.png}
+\includegraphics[width=.4\textwidth]{fig/knn-k5surface.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Example: k-nearest-neighbor classification}
+\begin{itemize}
+\item The parameter \(k\) controls the "roughness" of the classifier. 
+\item Larger values of \(k\) produce smoother decision boundaries.
+\begin{center}
+\includegraphics[width=.3\textwidth]{fig/knn-data.png}\\
+\includegraphics[width=.9\textwidth]{fig/knn-kdependence.png}
+\end{center}
+\item Is \(k\) a trainable parameter that can be selected by empirical loss minimisation?
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: k-nearest-neighbor classification}
+\begin{itemize}
+\item Split the data randomly into training and test data set:
+\begin{itemize}
+\item Only the training data set is used by the kNN classifier.
+\item Training and test data are used separately to calculate the 0-1 loss (aka accuracy, aka proportion correct) of the classifier.
+\end{itemize}
+\end{itemize}
+\begin{minipage}{.5\textwidth}%
+\begin{center}
+\includegraphics[width=\textwidth]{fig/knn-cvloss.png}
+\end{center}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}%
+\begin{itemize}
+\item The training accuracy is perfect for \(k=1\) (Why?) and goes down as \(k\) increases.
+\item The test accuracy is best for \(k\approx 6\).
+\end{itemize}
+\end{minipage}%
+\begin{itemize}
+\item The neighborhood parameter \(k\) can be optimised by loss minimisation, but should use a different data set than the one used to define the kNN classifier.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{In-sample vs Out-of-sample error}
+\begin{itemize}
+\item Our goal is to train a model that generalises well to new data. 
+\item Loss on training data (in-sample error) is too optimistic because the model has seen the data.
+\item Overfitting: A model achieves very low training loss by "regurtitating" the training data, including any noise and accidental patterns. Overfitted models generalise poorly to new data.
+\item Loss on previously unseen data (out-of sample error) is what we are really interested in.
+\item It is good practice to remove a fraction of data (e.g. 20\%) during training and use only for model testing.
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{Further reading}
+\begin{itemize}
+\item Linear algebra for least squares regression.
+\item Alternative loss functions
+\item Multiple linear regression for multiple inputs.
+\item Logistic regression for classification.
+\item Radius-neighborhood classifier and other neighborhood methods.
+\item Neighborhood methods for missing data imputation.
+\item Uncertainty estimation: Resampling methods, bootstrapping.
+\end{itemize}
+\end{frame}
+
+
+\section{Tree-based methods}
+
+\subsection{Decision trees}
+
+\begin{frame}{Background}
+\begin{itemize}
+\item Tree-based methods are simple and powerful function approximation methods.
+\item During training, the feature space is split up into rectangular regions.
+\item The model's prediction within each rectangular region is a constant.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Decision tree example}
+\begin{minipage}{.5\textwidth}
+\includegraphics[width=\textwidth]{fig/tree-simpleexample.png}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\begin{center}
+\includegraphics[width=.8\textwidth]{fig/tree-graph.png}
+\end{center}
+\end{minipage}%
+\end{frame}
+
+
+\begin{frame}{Decision tree terminology}
+\begin{itemize}
+\item Split: Partitioning data based on a feature and threshold value
+\item Node: a point in the tree where a decision is made
+\item Root node: first split in the tree
+\item Internal/decision node: Any node that performs a split
+\item Leaf node: Final node that outputs a prediction
+\item Depth: Number of decision levels from Root node to leaves
+\item Impurity: Measure how mixed the classes are
+\item Information gain: Reduction in impurity after a split
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Training a decision tree} 
+\begin{lstlisting}[language=python]
+from sklearn.tree import DecisionTreeClassifier
+
+# initialise decision tree with set maximum depth
+clf = DecisionTreeClassifier(max_depth=10)
+
+# X: shape (n_samples, n_features) 
+# y: shape (n_samples,) with 0/1 encoded class label
+
+# train decision tree
+clf.fit(X, y)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}{Decision tree for tree cover classification}
+Data set (plot), no code required it's on previous slide, decision surface
+\end{frame}
+
+
+\begin{frame}[fragile]{Visualising trained decision trees}
+\begin{minipage}{.4\textwidth}
+\begin{lstlisting}[language=python]
+from sklearn import tree
+clf = DecisionTreeClassifier(
+        max_depth=3)
+clf.fit(X, y)
+plt.figure(figsize=(10, 6))
+tree.plot_tree(clf,
+  feature_names=["altitude", 
+                 "aspect"],
+  class_names=["not_fir", 
+               "fir"],
+  filled=True, 
+  rounded=True,
+  fontsize=8)
+plt.show()
+\end{lstlisting}
+\end{minipage}%
+\begin{minipage}{.6\textwidth}
+\includegraphics[width=\textwidth]{fig/tree-vis.png}
+\end{minipage}%
+\end{frame}
+
+
+\begin{frame}{How to find node features and thresholds?}
+MORE HERE: at each node one of the available features needs to be compared to a threshold - how to select feature and threshold?, impurity measure, information gain, worked example on a decision stump and comparison to code
+\end{frame}
+
+
+\subsection{Random Forest, XGBoost}
+
+
+\begin{frame}{Random Forest}
+
+\begin{itemize}
+\item A RF is an ensemble of decision trees.
+\item Each tree is trained on random subsets of training data and input features.
+\item Each tree makes a prediction and the forest aggregates them.
+\begin{itemize}
+\item Classification: Majority vote
+\item Regression: Average
+\end{itemize}
+\item Improves robustness and avoids overfitting compared to single decision tree.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Example}
+
+MORE HERE: show code, example data, single tree vs RF decision surfaces
+
+\end{frame}
+
+
+\begin{frame}{Boosting}
+\begin{itemize}
+\item In ensemble methods (such as RF), each classifier (tree) is independently trained and optimised for maximum accuracy.
+\item A boosting algorithm trains a chain of weak classifiers sequentially. 
+\item Core algorithm:
+\begin{itemize}
+\item train a simple model
+\item calculate its errors over the training data
+\item train the next model to take the same inputs but predict the previous model's errors
+\item repeat, then aggregate all models (often with weights)
+\end{itemize}
+\item Throughtout the sequence the model is improved by gradually refining the prediction.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Gradient Boosting, XGBoost}
+\begin{itemize}
+\item Gradients of the loss function \(g_i = \frac{\partial L(\hat{y}_i,y_i)}{\partial \hat{y}_i}\) approximate errors.
+\item Changing \(\hat{y}_i\) proportional to \(-g_i\) will decrease the loss.
+\item In gradient boosting, each tree predicts the negative gradient \(\frac{\partial L(\hat{y},y)}{\partial \hat{y}}\) of the previous tree
+\item XGBoost is a popular library for Gradient Boosting
+\item MORE HERE
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{OLD Background: Measuring surprise}
+\begin{itemize}
+\item Shannon and Weaver (1948) developed a mathematical theory of communication
+\item As part of this they needed a mathematical measure of "surprise" after observing the outcome of a random variable, which has \(n\) possible outcomes with probabilities \(p_1, \dots, p_n\)
+\item Based on simple considerations (additivity, continuity) they showed that if outcome \(k\) is observed, the only reasonable measure of surprise is
+\[-\log_2 p_k\]
+\item A high-probability outcome is less surprising than a low-probability outcome.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{OLD Background: Entropy}
+\begin{itemize}
+\item Entropy is the negative expected surprise
+\[H(p_1,\dots,p_n) = \sum_{i=1}^n p_i \log_2 p_i\]
+\item Entropy is a summary measure of uncertainty or information content of a probability distribution.
+\item The higher entropy, the more "deterministic" a distribution is.
+\item TODO: A few bar plots of distributions with their entropy values.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{OLD Background: Empirical entropy}
+\begin{itemize}
+\item Given a set of values \(S = (y_1,\dots,y_n)\) where each \(y_i\) is either 0 or 1 
+\item From \(S\) we estimate the probability that \(y_i = 1\) by \[\hat{p} = \frac1n \sum_{i=1}^n y_i\] 
+\item The probability that \(y_i = 0\) is then estimated by \(1-\hat{p}\).
+\item We calculate the empirical binary entropy of the sample \(S\) as the entropy of the distribution \((\hat{p},1-\hat{p})\) \[H(S) = \hat{p} \log_2 \hat{p} + (1-\hat{p})\log_2 (1-\hat{p})\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{OLD Decision stump}
+\begin{itemize}
+\item We have a data set of input/output pairs \(S = \{(x_i,y_i)\}_{i=1}^n\) where 
+\item \(x_i \in \mathbb{R}\) are continuous inputs (eg temperature) and 
+\item \(y_i \in \{0,1\}\) are binary outputs (eg rain occurrence)
+\item We want to find a threshold \(\tau\) to "optimally separate" the data set \(S\) into \(S_l\) and \(S_r\) by \[S_l = \{(x_i, y_i): x_i < \tau\} \quad S_r = \{(x_i,y_i): x_i > \tau\}\]
+\item How to choose the threshold? What does "optimally separate" mean here?
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{OLD Decision stump}
+\begin{itemize}
+\item After setting the threshold \(\tau\) a fraction \(q_l = \frac{|S_l|}{|S|}\) of data ends up left of the threshold and \(q_r = \frac{|S_r|}{|S|}\) on the right
+\item Each set has its individual empirical entropy \(H(S_l)\) and \(H(S_r)\)
+\item 
+\end{itemize}
+\end{frame}
+
+
+
+\section{Neural Networks}
+
+
+
+
+\end{document}
+
