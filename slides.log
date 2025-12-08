@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.2.21)  8 DEC 2025 15:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.2.21)  8 DEC 2025 23:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1395,14 +1395,14 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [26
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 348--348
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 352--352
  [][][][] [][]  
  []
 
 \openout4 = `slides.vrb'.
 
 
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 361--361
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 365--365
  [][][][] [][]  
  []
 
@@ -1414,7 +1414,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [27
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 366--366
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 370--370
  [][][][] [][]  
  []
 
@@ -1426,14 +1426,14 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [28
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 369--369
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 373--373
  [][][][] [][]  
  []
 
 \openout4 = `slides.vrb'.
 
 
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 391--391
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 395--395
  [][][][] [][]  
  []
 
@@ -1451,10 +1451,15 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [29
 
  <./fig/tree-vis.png>]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 396--396
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 416--416
  [][][][] [][]  
  []
 
+<fig/impurity-sketch.png, id=703, 960.58875pt x 829.0975pt>
+File: fig/impurity-sketch.png Graphic file (type png)
+<use fig/impurity-sketch.png>
+Package pdftex.def Info: fig/impurity-sketch.png  used on input line 416.
+(pdftex.def)             Requested size: 122.91406pt x 106.07857pt.
 
 Overfull \hbox (2.39282pt too wide) has occurred while \output is active
  [][][][] [][]  
@@ -1462,8 +1467,8 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 
 [30
 
-]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 414--414
+ <./fig/impurity-sketch.png>]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 427--427
  [][][][] [][]  
  []
 
@@ -1475,10 +1480,30 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [31
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 422--422
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 439--439
  [][][][] [][]  
  []
 
+<fig/tree-scatter.png, id=740, 693.59125pt x 288.07625pt>
+File: fig/tree-scatter.png Graphic file (type png)
+<use fig/tree-scatter.png>
+Package pdftex.def Info: fig/tree-scatter.png  used on input line 439.
+(pdftex.def)             Requested size: 153.64493pt x 63.81213pt.
+<fig/tree-informationgain.png, id=741, 693.59125pt x 398.48875pt>
+File: fig/tree-informationgain.png Graphic file (type png)
+<use fig/tree-informationgain.png>
+Package pdftex.def Info: fig/tree-informationgain.png  used on input line 439.
+(pdftex.def)             Requested size: 153.64493pt x 88.26976pt.
+<fig/tree-histalldata.png, id=742, 693.59125pt x 291.0875pt>
+File: fig/tree-histalldata.png Graphic file (type png)
+<use fig/tree-histalldata.png>
+Package pdftex.def Info: fig/tree-histalldata.png  used on input line 439.
+(pdftex.def)             Requested size: 153.64493pt x 64.47916pt.
+<fig/tree-histsplit.png, id=743, 693.59125pt x 394.47375pt>
+File: fig/tree-histsplit.png Graphic file (type png)
+<use fig/tree-histsplit.png>
+Package pdftex.def Info: fig/tree-histsplit.png  used on input line 439.
+(pdftex.def)             Requested size: 153.64493pt x 87.38039pt.
 
 Overfull \hbox (2.39282pt too wide) has occurred while \output is active
  [][][][] [][]  
@@ -1486,8 +1511,9 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 
 [32
 
-]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 438--438
+ <./fig/tree-scatter.png> <./fig/tree-informationgain.png> <./fig/tree-histalld
+ata.png> <./fig/tree-histsplit.png>]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 458--458
  [][][][] [][]  
  []
 
@@ -1499,7 +1525,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [33
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 449--449
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 466--466
  [][][][] [][]  
  []
 
@@ -1511,7 +1537,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [34
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 461--461
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 482--482
  [][][][] [][]  
  []
 
@@ -1523,7 +1549,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [35
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 472--472
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 493--493
  [][][][] [][]  
  []
 
@@ -1535,7 +1561,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [36
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 481--481
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 505--505
  [][][][] [][]  
  []
 
@@ -1547,7 +1573,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [37
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 491--491
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 516--516
  [][][][] [][]  
  []
 
@@ -1559,7 +1585,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [38
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 500--500
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 525--525
  [][][][] [][]  
  []
 
@@ -1571,7 +1597,31 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [39
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 504--504
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 535--535
+ [][][][] [][]  
+ []
+
+
+Overfull \hbox (2.39282pt too wide) has occurred while \output is active
+ [][][][] [][]  
+ []
+
+[40
+
+]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 544--544
+ [][][][] [][]  
+ []
+
+
+Overfull \hbox (2.39282pt too wide) has occurred while \output is active
+ [][][][] [][]  
+ []
+
+[41
+
+]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 548--548
  [][][][] [][]  
  []
 
@@ -1580,7 +1630,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
  [][][][] [][]  
  []
 
-[40
+[42
 
 ]
 \tf@nav=\write6
@@ -1598,13 +1648,13 @@ LaTeX2e <2023-06-01>
 L3 programming layer <2023-06-05>
  ***********
 Package rerunfilecheck Info: File `slides.out' has not changed.
-(rerunfilecheck)             Checksum: AF4164D5D0B704702F712D307D8A1A9C;1114.
+(rerunfilecheck)             Checksum: F1203C9F6559F1C1E42D7DFE598A28C5;1114.
  ) 
 Here is how much of TeX's memory you used:
- 27056 strings out of 475735
- 524388 string characters out of 5784786
+ 27099 strings out of 475735
+ 525521 string characters out of 5784786
  2048759 words of memory out of 5000000
- 47157 multiletter control sequences out of 15000+600000
+ 47196 multiletter control sequences out of 15000+600000
  537105 words of font info for 105 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,19n,123p,428b,1392s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1627,10 +1677,10 @@ b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/t
 ype1/public/cm-super/sfso1000.pfb>
-Output written on slides.pdf (40 pages, 1322690 bytes).
+Output written on slides.pdf (42 pages, 1465719 bytes).
 PDF statistics:
- 999 PDF objects out of 1000 (max. 8388607)
- 582 compressed objects within 6 object streams
- 89 named destinations out of 1000 (max. 500000)
- 250 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1045 PDF objects out of 1200 (max. 8388607)
+ 603 compressed objects within 7 object streams
+ 93 named destinations out of 1000 (max. 500000)
+ 275 words of extra memory for PDF output out of 10000 (max. 10000000)
 

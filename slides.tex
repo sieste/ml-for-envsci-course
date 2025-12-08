@@ -345,6 +345,10 @@ y_new = model.predict(x_new)
 \end{itemize}
 \end{frame}
 
+
+
+
+
 \begin{frame}[fragile]{Training a decision tree} 
 \begin{lstlisting}[language=python]
 from sklearn.tree import DecisionTreeClassifier
@@ -391,9 +395,49 @@ plt.show()
 \end{frame}
 
 
-\begin{frame}{How to find node features and thresholds?}
-MORE HERE: at each node one of the available features needs to be compared to a threshold - how to select feature and threshold?, impurity measure, information gain, worked example on a decision stump and comparison to code
+\begin{frame}{Finding features and thresholds for splitting}
+\begin{minipage}{.6\textwidth}
+\begin{itemize}
+\item Gini impurity and entropy are measures of impurity, disorder, indeterminism.
+\item Binary data: \(\fat{y} = (y_1, \dots, y_n) = (0,0,1,0,1,...)\).
+\item Summarise \(\bar{y} = \frac1n \sum_{i=1}^n y_i\).
+\end{itemize}
+\end{minipage}%
+\begin{minipage}{.4\textwidth}
+\includegraphics[width=\textwidth]{fig/impurity-sketch.png}
+\end{minipage}%
+
+\vfill
+
+\begin{itemize}
+\item Gini impurity: \(G(\fat{y}) = 1 - \bar{y}^2 - (1-\bar{y})^2\)
+\item Entropy: \(H(\fat{y}) = \bar{y}\log \bar{y} + (1-\bar{y})\log (1-\bar{y})\)
+\end{itemize}
 \end{frame}
+
+
+\begin{frame}{Maximising Information Gain}
+\begin{itemize}
+\item We apply threshold-splitting of the data wrt one feature.
+\item This separates the data \(\fat{y}\) into \(\fat{y}_{left}\) and \(\fat{y}_{right}\) of sizes \(n_{left}\) and \(n_{right}\).
+\item The impurity of the split data set is calculated by \[G(\fat{y}_{left}, \fat{y}_{right}) = \frac{n_{left}}{n} G(\fat{y}_{left}) + \frac{n_{right}}{n} G(\fat{y}_{right})\]
+\item The impurity reduction (or "information gain") caused by the split is given by \[IG = G(\fat{y}) - G(\fat{y}_{left}, \fat{y}_{right})\]
+\item The feature/threshold combination that yields the highest information gain is selected.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Maximising Information Gain}
+\begin{minipage}{.5\textwidth}
+\includegraphics[width=\textwidth]{fig/tree-scatter.png}
+\includegraphics[width=\textwidth]{fig/tree-informationgain.png}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\includegraphics[width=\textwidth]{fig/tree-histalldata.png}
+\includegraphics[width=\textwidth]{fig/tree-histsplit.png}
+\end{minipage}%
+\end{frame}
+
 
 
 \subsection{Random Forest, XGBoost}
