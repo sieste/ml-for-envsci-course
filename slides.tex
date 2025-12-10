@@ -547,7 +547,126 @@ MORE HERE: show code, example data, single tree vs RF decision surfaces
 
 \section{Neural Networks}
 
+\begin{frame}{Artificial neuron (Perceptron)}
+\begin{itemize}
+\item An artificial neuron (perceptron) is a function 
+\[y = f(\fat{x}; \fat{w}, b) = \varphi\left( w_1 \cdot x_1 + \dots + w_k \cdot x_k + b\right)\]
+\item where
+\begin{itemize}
+\item \(\fat{x} = (x_1, \dots, x_k)\) is the \(k\)-dimensional input vector
+\item \(y\) is the 1-dimensional output of the neuron
+\item \(\fat{w} = (w_1, \dots, w_k)\) is the \(k\)-dimensional vector of weights 
+\item \(b\) is the bias
+\item \(\varphi(\cdot)\) is the activation function
+\end{itemize}
+\end{itemize}
+\end{frame}
 
+\begin{frame}{Activation functions}
+\begin{itemize}
+\item Typical activation functions:
+\begin{itemize}
+\item ReLU (Rectifier): \(\varphi(x) = max(0,x)\)
+\item Sigmoid: \(\varphi(x) = 1 / (1 + e^{-x})\)
+\item Swish: \(\varphi(x) = x / (1 + e^{-x})\)
+\item Tanh: \(\varphi(x) = (e^x - e^{-x}) / (e^x + e^{-x})\)
+\end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[width=.5\textwidth]{fig/nn-activations.png}
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Single-layer perceptron}
+\begin{itemize}
+\item multiple perceptrons (each with different weights and biases) calculating their outputs in parallel
+\[y_i = \varphi\left(\fat{w}_i^T \fat{x} + b_i\right)\] 
+\end{itemize}
+\begin{center}
+\includegraphics[width=.5\textwidth]{fig/nn-single-layer-perceptron.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Examples}
+Examples of randomly initialised 1d and 2d single layer perceptrons with increasing numbers of neurons, illustrating increasing flexibility and "expressive power".
+\begin{center}
+\includegraphics[width=.7\textwidth]{fig/nn-randomrelu1d.png}
+\includegraphics[width=.7\textwidth]{fig/nn-randomrelu2d.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Terminology}
+\end{frame}
+
+\begin{frame}{Multilayer perceptron}
+\end{frame}
+
+
+\begin{frame}{The Keras API}
+\end{frame}
+
+
+\begin{frame}{Simple data example}
+\end{frame}
+
+\begin{frame}{Model summary}
+\end{frame}
+
+
+\begin{frame}{Loss functions}
+crossentropy-loss for classification, squared-error loss for regression
+\end{frame}
+
+\begin{frame}{Gradient descent}
+\end{frame}
+
+\begin{frame}{Backpropagation}
+\end{frame}
+
+
+\begin{frame}{Stochastic gradient descent}
+\end{frame}
+
+
+\begin{frame}{Optimiser hyperparameters}
+\end{frame}
+
+\begin{frame}{Monitoring performance}
+learning curves, restarting training runs 
+\end{frame}
+
+
+\begin{frame}{Spatial data: 2d convolution}
+\end{frame}
+
+\begin{frame}{The channel dimension}
+\end{frame}
+
+\begin{frame}{Convolutional neural network}
+\end{frame}
+
+\begin{frame}{Encoder-Decoder architecture}
+\end{frame}
+
+\begin{frame}{Example: Weather image classification}
+\end{frame}
+
+\begin{frame}{Cross-validation, early stopping}
+\end{frame}
+
+\begin{frame}{Dropout}
+\end{frame}
+
+
+\begin{frame}{Further Reading}
+\begin{itemize}
+\item Sensitivity analysis, interpretability 
+\item Fine-tuning for new outputs/objectives
+\item Speeding up NNs: Quantisation, layer-wise optimisation 
+\item MORE HERE
+\end{itemize}
+\end{frame}
 
 
 \end{document}
