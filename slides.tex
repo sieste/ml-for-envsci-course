@@ -25,10 +25,72 @@ environmental sciences such as meteorology and ecology.
 \subsection{Supervised ML}
 
 
+\begin{frame}{Some examples}
+Air quality prediction: Predict high-resolution spatial pattern of next day PM10 concentration based on learned relationships between pollution, weather and traffic.
+\begin{center}
+\includegraphics[width=.5\textwidth]{fig/air-quality-map.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Some examples}
+Gap filling: Fill in missing data due to clouds in satellite images based on learned spatial patterns. 
+\begin{center}
+\includegraphics[width=.5\textwidth]{fig/cloud-inpainting.png}
+\end{center}
+\begin{flushright}
+{\tiny https://doi.org/10.3390/rs12233865}
+\end{flushright}
+\end{frame}
+
+
+\begin{frame}{Some examples}
+Monitoring wildlife: Learning patterns in seismic signals to detect and monitor animal species.
+\begin{center}
+\includegraphics[width=.7\textwidth]{fig/animal-sounds.png}
+\end{center}
+\begin{flushright}
+{\tiny https://doi.org/10.1111/2041-210X.70021}
+\end{flushright}
+\end{frame}
+
+
+\begin{frame}{Some examples}
+Weather prediction: Learning spatial, temporal and intervariable relationships between weather quantities to make skilful global weather predictions.
+\begin{center}
+\includegraphics[width=.6\textwidth]{fig/graphcast.png}
+\end{center}
+\begin{flushright}
+{\tiny https://doi.org/10.48550/arXiv.2212.12794}
+\end{flushright}
+\end{frame}
+
+\begin{frame}{Some examples}
+Image segmentation: Detecting and annotating trees on urban maps based on learned image patterns.
+\begin{center}
+\includegraphics[width=.4\textwidth]{fig/tree-segmentation.png}
+\end{center}
+\begin{flushright}
+{\tiny https://doi.org/10.3390/ijgi11040226}
+\end{flushright}
+\end{frame}
+
+\begin{frame}{Some examples}
+What do these examples have in common?
+
+\begin{itemize}
+\item High-dimensional (space, time, multivariable)
+\item Complex interactions between variables
+\item Data-rich but limited understanding of mechanisms
+\item Clear framing as input-output relationship
+\item Focus on skilful prediction
+\end{itemize}
+
+\end{frame}
+
 
 \begin{frame}{Supervised machine learning}
 \begin{itemize}
-\item We usually have an target (outcome) measurement that we wish to predict. 
+\item We have a target (outcome) measurement that we wish to predict. 
 \item The prediction should be based on a set of features (inputs). 
 \item For example
 \begin{itemize}
@@ -57,8 +119,8 @@ environmental sciences such as meteorology and ecology.
 \end{frame}
 
 
-\subsection{Model training}
 
+\subsection{Model training}
 
 \begin{frame}{Function approximation}
 \begin{itemize}
@@ -68,6 +130,7 @@ environmental sciences such as meteorology and ecology.
 \item Defining the feature vector \(\fat{x} = (x_1, x_2, \dots)\) and parameter vector \(\fat{\theta}=(\theta_1, \theta_2, \dots)\) a ML model is often compactly written as \[\hat{y} = f(\fat{x}; \fat\theta)\]
 \end{itemize}
 \end{frame}
+
 
 \begin{frame}{Training data}
 \begin{itemize}
@@ -92,7 +155,7 @@ environmental sciences such as meteorology and ecology.
 \item are as "close" as possible to the training targets \(y_1, \dots, y_n\)
 \item where closeness is measured by the loss function \(L(\hat{y}, y)\)
 \end{itemize}
-\[\hat{\fat\theta} = \underset{\fat\theta}{\mathrm{argmin}}\sum_{i=1}^n L(f(\fat{x}_i; \fat\theta), y_i)\]
+\[\hat{\fat\theta} = \underset{\fat\theta}{\mathrm{argmin}}\frac1n\sum_{i=1}^n L\left[f(\fat{x}_i; \fat\theta), y_i\right]\]
 \item The trained model can then be used to make predictions \(\hat{y}^*\) for new outcomed \(y^*\) based on new feature vectors \(\fat{x}^*\)
 \[\hat{y}^* = f(\fat{x}^*; \hat{\fat\theta})\]
 \end{itemize}
@@ -111,7 +174,7 @@ To train a ML model by empirical loss minimisation we need:
 \subsection{Examples, model evaluation}
 
 
-\begin{frame}{Example: Linear regression}
+\begin{frame}{Familiar example: Linear regression}
 \begin{itemize}
 \item Training features \(x_1, \dots, x_n\) are temperatures at different times \(t_1, \dots, t_n\)
 \item Training targets \(y_1, \dots, y_n\) are temperatures a short time \(\Delta\) later \(t_1 + \Delta, \dots, t_n + \Delta\)
@@ -218,6 +281,9 @@ y_new = model.predict(x_new)
 \end{frame}
 
 
+\begin{frame}{Skill scores}
+MORE HERE Skill scores of linear regression model
+\end{frame}
 
 
 
