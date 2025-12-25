@@ -395,6 +395,10 @@ MORE HERE Skill scores of linear regression model
 \includegraphics[width=.8\textwidth]{fig/tree-graph.png}
 \end{center}
 \end{minipage}%
+\begin{itemize}
+\item Left: Suppose (normalised) precipitation \(x_1\) and temperature \(x_2\) determine survival/death (\(y=1\) or \(0\)) of a plant species by a rectangular "habitable zone" in the \(x_1-x_2\) plane (left).
+\item Right: The survival/death classification can be represented by a decision tree (right).
+\end{itemize}
 \end{frame}
 
 
@@ -487,7 +491,7 @@ plt.show()
 \item We apply threshold-splitting of the data wrt one feature.
 \item This separates the data \(\fat{y}\) into \(\fat{y}_{left}\) and \(\fat{y}_{right}\) of sizes \(n_{left}\) and \(n_{right}\).
 \item The impurity of the split data set is calculated by \[G(\fat{y}_{left}, \fat{y}_{right}) = \frac{n_{left}}{n} G(\fat{y}_{left}) + \frac{n_{right}}{n} G(\fat{y}_{right})\]
-\item The impurity reduction (or "information gain") caused by the split is given by \[IG = G(\fat{y}) - G(\fat{y}_{left}, \fat{y}_{right})\]
+\item The impurity reduction (or "information gain" \(IG\)) caused by the split is given by \[IG = G(\fat{y}) - G(\fat{y}_{left}, \fat{y}_{right})\]
 \item The feature/threshold combination that yields the highest information gain is selected.
 \end{itemize}
 \end{frame}
@@ -525,10 +529,18 @@ plt.show()
 
 
 
-\begin{frame}{Example}
-
-MORE HERE: show code, example data, single tree vs RF decision surfaces
-
+\begin{frame}[fragile]{Example}
+\begin{lstlisting}[language=python]
+from sklearn.ensemble import RandomForestClassifier
+rfc = RandomForestClassifier(
+    n_estimators=100, # number of trees
+    max_depth=20,     # maximum tree depth
+    random_state=42   # reproducibility
+)
+model.fit(X, y)
+y_pred = model.predict(X)
+\end{lstlisting}
+MORE HERE: example data, single tree vs RF decision surfaces
 \end{frame}
 
 

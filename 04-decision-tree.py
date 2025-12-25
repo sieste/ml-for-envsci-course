@@ -190,3 +190,58 @@ plt.tight_layout()
 plt.show()
 
 
+# fit random forest
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+# Split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Model
+model = RandomForestClassifier(
+    n_estimators=100,
+    max_depth=20,
+    random_state=42
+)
+
+# Train
+model.fit(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Evaluate
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+
+
+# prediction surface over x1/x2 plane
+x1 = np.linspace(X[:,0].min(), X[:,0].max(), 400)
+x2 = np.linspace(X[:,1].min(), X[:,1].max(), 400)
+xx1, xx2 = np.meshgrid(x1, x2)
+grid = np.c_[xx1.ravel(), xx2.ravel()]
+Z = model.predict(grid).reshape(xx1.shape)
+plt.contourf(xx1, xx2, Z, alpha=0.3)
+# plt.scatter(X[:10000,0], X[:10000,1], c=y[:10000], s=1)
+plt.xlabel("Altitude")
+plt.ylabel("Aspect")
+plt.show()
+
+
+# probability surface over x1/x2 plane
+x1 = np.linspace(X[:,0].min(), X[:,0].max(), 400)
+x2 = np.linspace(X[:,1].min(), X[:,1].max(), 400)
+xx1, xx2 = np.meshgrid(x1, x2)
+grid = np.c_[xx1.ravel(), xx2.ravel()]
+Z = model.predict_proba(grid)[:,1].reshape(xx1.shape)
+cf = plt.contourf(xx1, xx2, Z, levels=np.linspace(0, 1, 21), vmin=0, vmax=1,)
+plt.colorbar(cf, label="probability")
+# plt.scatter(X[:10000,0], X[:10000,1], c=y[:10000], s=1)
+plt.xlabel("Altitude")
+plt.ylabel("Aspect")
+plt.show()
+
+

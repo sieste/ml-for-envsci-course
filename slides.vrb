@@ -1,22 +1,12 @@
-\frametitle{Visualising trained decision trees}
-\begin{minipage}{.4\textwidth}
+\frametitle{Example}
 \begin{lstlisting}[language=python]
-from sklearn import tree
-clf = DecisionTreeClassifier(
-        max_depth=3)
-clf.fit(X, y)
-plt.figure(figsize=(10, 6))
-tree.plot_tree(clf,
-  feature_names=["altitude",
-                 "aspect"],
-  class_names=["not_fir",
-               "fir"],
-  filled=True,
-  rounded=True,
-  fontsize=8)
-plt.show()
+from sklearn.ensemble import RandomForestClassifier
+rfc = RandomForestClassifier(
+    n_estimators=100, # number of trees
+    max_depth=20,     # maximum tree depth
+    random_state=42   # reproducibility
+)
+model.fit(X, y)
+y_pred = model.predict(X)
 \end{lstlisting}
-\end{minipage}%
-\begin{minipage}{.6\textwidth}
-\includegraphics[width=\textwidth]{fig/tree-vis.png}
-\end{minipage}%
+MORE HERE: example data, single tree vs RF decision surfaces
