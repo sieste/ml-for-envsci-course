@@ -88,7 +88,7 @@ What do these examples have in common?
 \end{frame}
 
 
-\begin{frame}{Supervised machine learning}
+\begin{frame}{Supervised machine learning: General setup}
 \begin{itemize}
 \item We have a target (outcome) measurement that we wish to predict. 
 \item The prediction should be based on a set of features (inputs). 
@@ -560,7 +560,7 @@ MORE HERE: example data, single tree vs RF decision surfaces
 \end{frame}
 
 
-\begin{frame}{Gradient Boosting, XGBoost}
+\begin{frame}{WIP: Gradient Boosting, XGBoost}
 \begin{itemize}
 \item Gradients of the loss function \(g_i = \frac{\partial L(\hat{y}_i,y_i)}{\partial \hat{y}_i}\) approximate errors.
 \item Changing \(\hat{y}_i\) proportional to \(-g_i\) will decrease the loss.
@@ -572,52 +572,27 @@ MORE HERE: example data, single tree vs RF decision surfaces
 
 
 
-\begin{frame}{OLD Background: Measuring surprise}
+\begin{frame}{WIP: Forest fire prediction}
+
+\end{frame}
+
+\begin{frame}{WIP: Evaluation metrics in scikit-learn}
 \begin{itemize}
-\item Shannon and Weaver (1948) developed a mathematical theory of communication
-\item As part of this they needed a mathematical measure of "surprise" after observing the outcome of a random variable, which has \(n\) possible outcomes with probabilities \(p_1, \dots, p_n\)
-\item Based on simple considerations (additivity, continuity) they showed that if outcome \(k\) is observed, the only reasonable measure of surprise is
-\[-\log_2 p_k\]
-\item A high-probability outcome is less surprising than a low-probability outcome.
+\item accuracy
+\item confusion matrix
+\item ROC/AUC analysis
+\item classification report
+\item many more for further reading
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}{OLD Background: Entropy}
+\begin{frame}{WIP: Variable importance}
 \begin{itemize}
-\item Entropy is the negative expected surprise
-\[H(p_1,\dots,p_n) = \sum_{i=1}^n p_i \log_2 p_i\]
-\item Entropy is a summary measure of uncertainty or information content of a probability distribution.
-\item The higher entropy, the more "deterministic" a distribution is.
-\item TODO: A few bar plots of distributions with their entropy values.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{OLD Background: Empirical entropy}
-\begin{itemize}
-\item Given a set of values \(S = (y_1,\dots,y_n)\) where each \(y_i\) is either 0 or 1 
-\item From \(S\) we estimate the probability that \(y_i = 1\) by \[\hat{p} = \frac1n \sum_{i=1}^n y_i\] 
-\item The probability that \(y_i = 0\) is then estimated by \(1-\hat{p}\).
-\item We calculate the empirical binary entropy of the sample \(S\) as the entropy of the distribution \((\hat{p},1-\hat{p})\) \[H(S) = \hat{p} \log_2 \hat{p} + (1-\hat{p})\log_2 (1-\hat{p})\]
-\end{itemize}
-\end{frame}
-
-\begin{frame}{OLD Decision stump}
-\begin{itemize}
-\item We have a data set of input/output pairs \(S = \{(x_i,y_i)\}_{i=1}^n\) where 
-\item \(x_i \in \mathbb{R}\) are continuous inputs (eg temperature) and 
-\item \(y_i \in \{0,1\}\) are binary outputs (eg rain occurrence)
-\item We want to find a threshold \(\tau\) to "optimally separate" the data set \(S\) into \(S_l\) and \(S_r\) by \[S_l = \{(x_i, y_i): x_i < \tau\} \quad S_r = \{(x_i,y_i): x_i > \tau\}\]
-\item How to choose the threshold? What does "optimally separate" mean here?
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}{OLD Decision stump}
-\begin{itemize}
-\item After setting the threshold \(\tau\) a fraction \(q_l = \frac{|S_l|}{|S|}\) of data ends up left of the threshold and \(q_r = \frac{|S_r|}{|S|}\) on the right
-\item Each set has its individual empirical entropy \(H(S_l)\) and \(H(S_r)\)
-\item 
+\item quick and dirty: clf.feature\_importances\_ (mean impurity decrease)
+\item more informative: sklearn.inspection.permutation\_importance (performance drop when a feature is shuffled)
+\item "explainability"/reporting: SHAP values (global importance measure, standard)
+\item many more for further reading
 \end{itemize}
 \end{frame}
 
@@ -674,7 +649,14 @@ Examples of randomly initialised 1d and 2d single layer perceptrons with increas
 \end{center}
 \end{frame}
 
-\begin{frame}{Terminology}
+\begin{frame}{WIP - Terminology}
+\begin{itemize}
+\item Neuron, node
+\item Weight
+\item Bias
+\item Hidden layer
+\item Output layer
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Multilayer perceptron}
