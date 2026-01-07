@@ -11,13 +11,13 @@
 \maketitle
 
 \begin{frame}
-This 2-day workshop introduces core concepts of machine learning
+\textbf{This 2-day workshop introduces core concepts of machine learning
 including common algorithms, standard workflows and key software
 libraries. The focus will be on supervised machine learning for
 regression and classification using a range of methods such as random
 forests and deep convolutional neural networks. The material will be
 taught through a mix of theory and practical examples across different
-environmental sciences such as meteorology and ecology.
+environmental sciences such as meteorology and ecology.}
 \end{frame}
 
 \section{Introduction}
@@ -26,14 +26,14 @@ environmental sciences such as meteorology and ecology.
 
 
 \begin{frame}{Some examples}
-Air quality prediction: Predict high-resolution spatial pattern of next day PM10 concentration based on learned relationships between pollution, weather and traffic.
+\textbf{Air quality prediction}: Predict high-resolution spatial pattern of next day PM10 concentration based on learned relationships between pollution, weather and traffic.
 \begin{center}
 \includegraphics[width=.5\textwidth]{fig/air-quality-map.png}
 \end{center}
 \end{frame}
 
-\begin{frame}{Some examples}
-Gap filling: Fill in missing data due to clouds in satellite images based on learned spatial patterns. 
+\begin{frame}{Examples of ML applications}
+\textbf{Gap filling}: Fill in missing data due to clouds in satellite images based on learned spatial patterns. 
 \begin{center}
 \includegraphics[width=.5\textwidth]{fig/cloud-inpainting.png}
 \end{center}
@@ -43,8 +43,8 @@ Gap filling: Fill in missing data due to clouds in satellite images based on lea
 \end{frame}
 
 
-\begin{frame}{Some examples}
-Monitoring wildlife: Learning patterns in seismic signals to detect and monitor animal species.
+\begin{frame}{Examples of ML applications}
+\textbf{Monitoring wildlife}: Learning patterns in seismic signals to detect and monitor animal species.
 \begin{center}
 \includegraphics[width=.7\textwidth]{fig/animal-sounds.png}
 \end{center}
@@ -54,8 +54,8 @@ Monitoring wildlife: Learning patterns in seismic signals to detect and monitor 
 \end{frame}
 
 
-\begin{frame}{Some examples}
-Weather prediction: Learning spatial, temporal and intervariable relationships between weather quantities to make skilful global weather predictions.
+\begin{frame}{Examples of ML applications}
+\textbf{Weather prediction}: Learning spatial, temporal and intervariable relationships between weather quantities to make skilful global weather predictions.
 \begin{center}
 \includegraphics[width=.6\textwidth]{fig/graphcast.png}
 \end{center}
@@ -64,8 +64,8 @@ Weather prediction: Learning spatial, temporal and intervariable relationships b
 \end{flushright}
 \end{frame}
 
-\begin{frame}{Some examples}
-Image segmentation: Detecting and annotating trees on urban maps based on learned image patterns.
+\begin{frame}{Examples of ML applications}
+\textbf{Image segmentation}: Detecting and annotating trees on urban maps based on learned image patterns.
 \begin{center}
 \includegraphics[width=.4\textwidth]{fig/tree-segmentation.png}
 \end{center}
@@ -74,15 +74,15 @@ Image segmentation: Detecting and annotating trees on urban maps based on learne
 \end{flushright}
 \end{frame}
 
-\begin{frame}{Some examples}
+\begin{frame}{Examples of ML applications}
 What do these examples have in common?
 
 \begin{itemize}
-\item High-dimensional (space, time, multivariable)
-\item Complex interactions between variables
-\item Data-rich but limited understanding of mechanisms
-\item Clear framing as input-output relationship
-\item Focus on skilful prediction
+\item High-dimensional data (space, time, multivariable)
+\item Need to learn complex interactions between variables
+\item Data-rich but often limited mechanistic understanding
+\item Clear framing as an input-output relationship
+\item Focus on skilful prediction of observables
 \end{itemize}
 
 \end{frame}
@@ -90,44 +90,51 @@ What do these examples have in common?
 
 \begin{frame}{Supervised machine learning: General setup}
 \begin{itemize}
-\item We have a target (outcome) measurement that we wish to predict. 
-\item The prediction should be based on a set of features (inputs). 
+\item We have an observable \textbf{target outcome} we wish to predict. 
+\item The prediction can be based on a set of \textbf{input features}. 
 \item For example
 \begin{itemize}
-\item predict future temperature based on current temperature, pressure and wind speed 
-\item predict occurrence of wildfire based on measures of heat, drought and wind 
-\item predict crop yield based on precipitation, temperature, soil nutrients, pests.
+\item predict future temperature based on current temperature, pressure, wind 
+\item predict occurrence of wildfire based on measures of heat, humidity, wind 
+\item predict crop yield based on agricultural practice, soil nutrients, pests
 \end{itemize}
-\item The goal of supervised ML is to build a model that predicts outcomes based on available features in new, previously unseen situations.
-\item A "good" model is one that produces accurate predictions.
+\item The goal of supervised ML is to \textbf{build a model} that predicts outcomes based on available features.
+\item A "good" ML model is one that produces accurate predictions.
 \end{itemize}
 \end{frame}
 
 
 \begin{frame}{Regression and classification}
 \begin{itemize}
-\item The nature of the target variable determines the type of ML problem.
-\item Regression: Predicting quantitative outcomes. 
+\item The type of target variable determines the type of ML problem.
+\item \textbf{Regression:} Predicting quantitative outcomes. 
 \begin{itemize}
-\item For example: temperature in degrees, crop yield in tonnes, number of sharks, precipitation amount in mm
+\item For example: temperature in degrees, crop yield in tonnes, number of sharks, rain amount in mm
 \end{itemize}
-\item Classification: Predicting categorical outcomes. 
+\item \textbf{Classification:} Predicting categorical outcomes. 
 \begin{itemize}
-\item For example: wildfire occurrence, temperature below zero, precipitation type (rain/snow/hail), precipitation amount none/low/medium/high
+\item For example: wildfire yes/no, temperature freezing/nonfreezing, precipitation type rain/snow/hail, air quality low/medium/high
 \end{itemize}
+\item Regression vs classification determines various details of the ML model and analysis.
 \end{itemize}
 \end{frame}
 
 
+\begin{frame}{WIP: Regression and classification}
+
+TODO: example outputs from a regression model and a classification model used later in the course to illustrate the distinction
+
+\end{frame}
+
 
 \subsection{Model training}
 
-\begin{frame}{Function approximation}
+\begin{frame}{Function approximation theory}
 \begin{itemize}
-\item A ML model is a prediction rule that translates one or more features \(x_1, x_2, \dots\) into an estimate \(\hat{y}\) of the target \(y\).
-\item The prediction rule is usually calculated by a specific mathematical function \[\hat{y} = f(x_1, x_2, \dots)\]
-\item The function \(f(\dots)\) usually includes one or many parameters \(\theta_1, \theta_2, \dots\) that control how the function translates inputs to outputs.
-\item Defining the feature vector \(\fat{x} = (x_1, x_2, \dots)\) and parameter vector \(\fat{\theta}=(\theta_1, \theta_2, \dots)\) a ML model is often compactly written as \[\hat{y} = f(\fat{x}; \fat\theta)\]
+\item A ML model is a \textbf{prediction rule} that translates one or more features \(x_1, x_2, \dots\) into an estimate \(\hat{y}\) of the target \(y\).
+\item The prediction rule is calculated by a \textbf{mathematical function} \[\hat{y} = f(x_1, x_2, \dots)\]
+\item The function \(f(\dots)\) usually includes \textbf{model parameters} \(\theta_1, \theta_2, \dots\) that control how inputs are translated to outputs.
+\item Defining the feature vector \(\fat{x} = (x_1, x_2, \dots)\) and parameter vector \(\fat{\theta}=(\theta_1, \theta_2, \dots)\) a trainable ML model is often compactly written as \[\hat{y} = f(\fat{x}; \fat\theta)\]
 \end{itemize}
 \end{frame}
 
@@ -135,28 +142,59 @@ What do these examples have in common?
 \begin{frame}{Training data}
 \begin{itemize}
 \item Supervised ML works by "learning from examples".
-\item Training data set is a set of input-output examples \[S = \left\{(\fat{x}_i, y_i)\right\}_{i=1}^n\] where
+\item \textbf{Training data} \(S\) is a set of input-output examples \[S = \left\{(\fat{x}_i, y_i)\right\}_{i=1}^n\] where
 \begin{itemize}
-\item \(\fat{x}_i = (x_{i,1}, x_{i,2}, \dots, x_{i,k})\) is the feature vector (containing \(k\) features) in the \(i\)-th example
-\item \(y_i\) is the outcome in the \(i\)-th example
-\item \(n\) is the sample size
+\item \(\fat{x}_i = (x_{i,1}, x_{i,2}, \dots, x_{i,k})\) is the \textbf{feature vector} (containing \(k\) features) in the \(i\)-th example
+\item \(y_i\) is the \textbf{target outcome} observed in the \(i\)-th example
+\item \(n\) is the \textbf{sample size}
 \end{itemize}
-\item The training data set \(S\) is used to build our prediction model to predict a new outcome \(y^*\) based on a feature vector \(\fat{x}^*\).
+\item The data set \(S\) is used to train our ML model \(f(\fat{x};\fat\theta)\) that can predict the outcome \(y^*\) for arbitrary feature vector \(\fat{x}^*\).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Loss function}
+\begin{itemize}
+\item A loss function \(L(\hat{y},y)\) is a function that quantifies \textbf{how different} the prediction \(\hat{y}\) is to the target outcome \(y\).
+\item Loss functions are typically \textbf{negatively oriented}, where lower values indicate better predictions.
+\item The loss function must be appropriate for the ML task at hand (regression vs classification) and can usually be set when intialising the ML model.
+\item Otherwise the choice of loss function is \textbf{often ambiguous} and difficult to fully justify a particular choice.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Loss function}
+\begin{itemize}
+\item \textbf{Regression} (where \(\hat{y}\) and \(y\) are real numbers):
+\begin{itemize}
+\item Squared-error loss \(L(\hat{y},y) = (\hat{y} - y)^2\)
+\item Absolute-error loss \(L(\hat{y},y) = |\hat{y} - y|\)
+\end{itemize}
+\item \textbf{Binary classification} (where \(y\) is 0 or 1 and \(\hat{y}\) is the probability for outcome "1"):
+\begin{itemize}
+\item Cross-entropy loss \(L(\hat{y},y) = -y\log\hat{y} - (1-y)\log(1-\hat{y})\)
+\item Quadratic loss \(L(\hat{y},y) = (\hat{y} - y)^2\)
+\end{itemize}
+\item \textbf{Multivariate classification} (where \(y = (0,\dots,1,\dots,0)\) is a binary vector indicating which of \(k\) classes occurs and \(\hat{y}\) is a vector of \(k\) class probabilities)
+\begin{itemize}
+\item Cross-entropy loss \(L(\hat{y},y) = - \sum_{i=1}^k y_k \log \hat{y}_k\)
+\item Focal loss \(L(\hat{y},y) = - \sum_{i=1}^k y_k (1-\hat{y})^\gamma \log \hat{y}_k\)
+\end{itemize}
 \end{itemize}
 \end{frame}
 
 
+
 \begin{frame}{Empirical loss minimisation}
 \begin{itemize}
-\item Model training is achieved by 
+\item We can now \textbf{formalise} training of ML model \(f(\fat{x};\fat\theta)\) as
 \begin{itemize}
 \item trying to find model parameters \(\fat\theta\) such that
-\item the model outputs \(\hat{y}_1, ..., \hat{y}_n\) calculated from \(\fat{x}_1, \dots, \fat{x}_n\) 
-\item are as "close" as possible to the training targets \(y_1, \dots, y_n\)
-\item where closeness is measured by the loss function \(L(\hat{y}, y)\)
+\item the model outputs \(\hat{y}_1, ..., \hat{y}_n\) calculated from features \(\fat{x}_1, \dots, \fat{x}_n\) 
+\item achieve minimal average loss when compared to the targets \(y_1, \dots, y_n\) in the training data set
+\item using an appropriate loss function \(L(\hat{y}, y)\).
 \end{itemize}
+\item \textbf{The Empirical Loss Minimisation paradigm:}
 \[\hat{\fat\theta} = \underset{\fat\theta}{\mathrm{argmin}}\frac1n\sum_{i=1}^n L\left[f(\fat{x}_i; \fat\theta), y_i\right]\]
-\item The trained model can then be used to make predictions \(\hat{y}^*\) for new outcomed \(y^*\) based on new feature vectors \(\fat{x}^*\)
+\item The trained model with parameters \(\hat{\fat\theta}\) can then be used to make predictions \(\hat{y}^*\) based on new feature vectors \(\fat{x}^*\)
 \[\hat{y}^* = f(\fat{x}^*; \hat{\fat\theta})\]
 \end{itemize}
 \end{frame}
@@ -165,26 +203,27 @@ What do these examples have in common?
 To train a ML model by empirical loss minimisation we need:
 \begin{itemize}
 \item a training data set \(S\) containing \(n\) examples of inputs and corresponding outcomes
-\item a model function with trainable parameters \(\fat\theta\) that translates inputs \(\fat{x}\) into an output \(\hat{y}\)
-\item a loss function that quantifies how close model output \(\hat{y}\) is to the target outcome \(y\)
-\item a mechanism to find parameters that minimise the loss 
+\item a model function \(f(\fat{x};\fat\theta)\) with trainable parameters \(\fat\theta\) that translates inputs \(\fat{x}\) into an output \(\hat{y}\)
+\item a loss function \(L(\hat{y},y)\) that quantifies how close model output \(\hat{y}\) is to the target outcome \(y\)
+\item a search algorithm to find parameters that minimise the loss 
 \end{itemize}
+The combination of training data set, search algorithm, model function \(f(\fat{x};\fat\theta)\) and loss function \(L(\hat{y},y)\) determine the ML approach and \textbf{these details should always be reported when documenting ML results.}
 \end{frame}
 
 \subsection{Examples, model evaluation}
 
 
-\begin{frame}{Familiar example: Linear regression}
+\begin{frame}{Code example: Linear regression}
 \begin{itemize}
-\item Training features \(x_1, \dots, x_n\) are temperatures at different times \(t_1, \dots, t_n\)
-\item Training targets \(y_1, \dots, y_n\) are temperatures a short time \(\Delta\) later \(t_1 + \Delta, \dots, t_n + \Delta\)
-\item Model function is a linear function with intercept \(\theta_1\) and slope \(\theta_2\), such that \[\hat{y} = f(x; \fat\theta) = \theta_1 + \theta_2 \cdot x\]
-\item Our loss function is the squared-error loss \[L(\hat{y}, y) = (\hat{y} - y)^2\]
-\item Optimisation: exaustive search over a grid of parameter values (don't do this in practice!)
+\item \textbf{Features} \(x_1, \dots, x_n\): temperatures at different times \(t_1, \dots, t_n\)
+\item \textbf{Targets} \(y_1, \dots, y_n\): temperatures a short time \(\Delta\) later \(t_1 + \Delta, \dots, t_n + \Delta\)
+\item \textbf{Model}: Linear function with intercept \(\theta_1\) and slope \(\theta_2\), such that \[\hat{y} = f(x; \fat\theta) = \theta_1 + \theta_2 \cdot x\]
+\item \textbf{Loss}: Squared-error loss \[L(\hat{y}, y) = (\hat{y} - y)^2\]
+\item \textbf{Search}: Exaustive search over a grid of parameter values (don't do this in practice!)
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Example: Linear regression}
+\begin{frame}{Code example: Linear regression}
 \begin{center}
 \includegraphics[width=.28\textwidth]{fig/linreg-xy.png}
 \includegraphics[width=.3\textwidth]{fig/linreg-xyplot1.png}
@@ -402,41 +441,72 @@ MORE HERE Skill scores of linear regression model
 \end{frame}
 
 
+\begin{frame}{Decision tree example}
+\begin{minipage}{.5\textwidth}
+\begin{center}
+\includegraphics[width=.5\textwidth]{fig/tree-simpleexample.png}
+\end{center}
+\end{minipage}%
+\begin{minipage}{.4\textwidth}
+\begin{center}
+\includegraphics[width=.6\textwidth]{fig/tree-graph.png}
+\end{center}
+\end{minipage}%
+\begin{itemize}
+\item Classification function for feature vector \(\fat{x}=(x_1,x_2)\) \[f(\fat{x};{\color{green}\fat\theta}) = \begin{cases} 0 & \text{if}\quad x_1 < {\color{green}0}\\ 0 & \text{if}\quad x_1 > {\color{green}0},\ x_2 > {\color{green}0.5} \\ 0 &\text{if}\quad x_1 > {\color{green}0},\ x_2 < {\color{green}-0.5} \\ 1 & \text{otherwise}\end{cases}\]
+\item If decision thresholds are trainable parameters, a decision tree becomes an ML model.
+\end{itemize}
+\end{frame}
+
+
 \begin{frame}{Decision tree terminology}
 \begin{itemize}
-\item Split: Partitioning data based on a feature and threshold value
-\item Node: a point in the tree where a decision is made
-\item Root node: first split in the tree
-\item Internal/decision node: Any node that performs a split
-\item Leaf node: Final node that outputs a prediction
-\item Depth: Number of decision levels from Root node to leaves
-\item Impurity: Measure how mixed the classes are
-\item Information gain: Reduction in impurity after a split
+\item \textbf{Split}: Partitioning data based on a feature and threshold 
+\item \textbf{Node}: a point in the tree where a decision is made
+\item \textbf{Root node}: first split in the tree
+\item \textbf{Internal node}: A node that performs a split
+\item \textbf{Leaf node}: Final node that outputs a prediction
+\item \textbf{Depth}: Number of decision levels from Root node to leaves
+\item \textbf{Impurity}: Measure how mixed the targets are within a split
+\item \textbf{Information gain}: Reduction in impurity after a split
 \end{itemize}
 \end{frame}
 
 
 
 
-
-\begin{frame}[fragile]{Training a decision tree} 
+\begin{frame}[fragile]{Training a decision tree for binary classification} 
+\begin{minipage}{.6\textwidth}
 \begin{lstlisting}[language=python]
 from sklearn.tree import DecisionTreeClassifier
 
-# initialise decision tree with set maximum depth
-clf = DecisionTreeClassifier(max_depth=10)
+# synthetic data 
+# X.shape = (300, 2) -- x1,x2 as columns
+# y.shape = (300,) -- targets
 
-# X: shape (n_samples, n_features) 
-# y: shape (n_samples,) with 0/1 encoded class label
+# initialise decision tree with max. depth 3
+clf = DecisionTreeClassifier(max_depth=3)
 
 # train decision tree
 clf.fit(X, y)
+
+# predict
+clf.predict(np.array([0.5,0]).reshape(-1,2)) 
+# returns: array([1])
 \end{lstlisting}
+\end{minipage}%
+\begin{minipage}{.4\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{fig/tree-simple-fitted.png}
+\end{center}
+\end{minipage}%
+
+The trained decision tree recovers the correct classification boundary.
 \end{frame}
 
 
-\begin{frame}{Decision tree for tree cover classification}
-Data set (plot), no code required it's on previous slide, decision surface
+\begin{frame}{WIP: Code example: Tree cover classification}
+TODO: Data set (plot), no code required it's on previous slide, decision surface
 \end{frame}
 
 
