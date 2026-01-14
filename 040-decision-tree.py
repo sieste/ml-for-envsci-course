@@ -69,32 +69,40 @@ else:
 # unzip and load into numpy array
 path = f"{target_dir}/covtype.data.gz"  # adjust as needed
 with gzip.open(path, "rt") as f:
-    arr = np.genfromtxt(f, delimiter=",")
+    covtype_data = np.genfromtxt(f, delimiter=",")
 
 # column names are documented in covtype.info
 
 # target (last column) tree cover encoded as integer 1-7. we coarse-grain the
-# tree type into pine (1) and non-pine (0)
-cover = arr[:, -1]
+# tree type into fir (1) and non-fir species (0)
+cover = covtype_data[:, -1]
 y = np.zeros_like(cover)
 #y[ np.isin(cover, [2,3]) ] = 1 # pine
 y[ np.isin(cover, [1,6]) ] = 1 # fir
+
+
+np.mean(y)
+# in total, about 40% of trees in the data set are firs. 
+# so the default best-guess prediction could be "no fir" 
+
 
 # use columns 0 (elevation) and 1 (aspect) as features 0: Elevation [m], 1:
 # Aspect [azimuth], 2: Slope [deg], 3: Horz. Dist. to Water [m], 4: Vert. Dist.
 # to Water [m], 5: Horz. Dist. to Road [m]
 i_feat = [0, 1]
-X = arr[:, i_feat]
+X = covtype_data[:, i_feat]
 for i,cover in zip([0,1], ['non-fir', 'fir']):
   mask = (y == i)
   Xi = X[mask,:]
-  i_sub = np.random.randint(0, len(Xi), 5000)
-  plt.plot(Xi[i_sub,0], Xi[i_sub, 1], '.', label=cover)
+  i_sub = np.random.randint(0, len(Xi), 2000)
+  plt.plot(Xi[i_sub,0], Xi[i_sub, 1], '.', label=cover, alpha=.5)
 plt.legend()
+plt.title('Subset of 2000 trees from CoverType data')
+plt.xlabel('Elevation')
+plt.ylabel('Aspect')
 plt.show()
 
-# overall, about 40% firs in the data, firs seem to prefer higher altitudes and
-# less exposure to direct sunlight
+# firs seem to prefer higher altitudes and less exposure to direct sunlight
 
 
 
@@ -105,7 +113,7 @@ from sklearn.tree import DecisionTreeClassifier
 # y: shape (n_samples,) with 0/1 labels for "fir"
 
 clf = DecisionTreeClassifier(
-    max_depth=10   # small tree for easy visualization
+    max_depth=20   # small tree for easy visualization
 )
 clf.fit(X, y)
 
@@ -119,14 +127,19 @@ grid = np.c_[xx1.ravel(), xx2.ravel()]
 Z = clf.predict(grid).reshape(xx1.shape)
 
 plt.contourf(xx1, xx2, Z, alpha=0.3)
-plt.scatter(X[:10000,0], X[:10000,1], c=y[:10000], s=1)
+plt.scatter(X[:10000,0], X[:10000,1], c=y[:10000], s=1, alpha=.1)
 plt.xlabel("Altitude")
 plt.ylabel("Aspect")
 plt.show()
 
 
-from sklearn import tree
 
+
+
+
+
+# visualising the decision tree
+from sklearn import tree
 clf = DecisionTreeClassifier(max_depth=3)
 clf.fit(X, y)
 plt.figure(figsize=(10, 6))
@@ -137,6 +150,7 @@ tree.plot_tree(clf,
     fontsize=8
 )
 plt.show()
+
 
 
 # decision stump on feature 1 by information gain maximisation
@@ -210,44 +224,118 @@ plt.tight_layout()
 plt.show()
 
 
+
+
+
+# decision surfaces for different tree depths
+x1_grid = np.linspace(X[:,0].min(), X[:,0].max(), 400)
+x2_grid = np.linspace(X[:,1].min(), X[:,1].max(), 400)
+xx1_grid, xx2_grid = np.meshgrid(x1, x2)
+grid = np.c_[xx1_grid.ravel(), xx2_grid.ravel()]
+maxdepths = [4, 8, 16]
+Z = []
+for md in maxdepths:
+  clf = DecisionTreeClassifier(max_depth=md)
+  clf.fit(X, y)
+  Z.append(clf.predict(grid).reshape(xx1.shape))
+fig,axs = plt.subplots(len(Z),1,figsize=(4,7))
+for i,md in enumerate(maxdepths):
+  axs[i].contourf(xx1, xx2, Z[i], alpha=0.3)
+  axs[i].set_title(f"max_depth = {md}")
+plt.tight_layout()
+plt.show()
+
+
+
+
+# list all model hyperparameters
+
+clf.get_params()
+
+# {'ccp_alpha': 0.0,
+#  'class_weight': None,
+#  'criterion': 'gini',
+#  'max_depth': 16,
+#  'max_features': None,
+#  'max_leaf_nodes': None,
+#  'min_impurity_decrease': 0.0,
+#  'min_samples_leaf': 1,
+#  'min_samples_split': 2,
+#  'min_weight_fraction_leaf': 0.0,
+#  'monotonic_cst': None,
+#  'random_state': None,
+#  'splitter': 'best'}
+
+from sklearn.model_selection import GridSearchCV
+clf_cv = GridSearchCV(
+    estimator=clf,
+    param_grid={"max_depth": [4,8,16,32], "criterion": ["gini", "entropy"]},
+    cv=5
+)
+clf_cv.fit(X, y)
+
+# predict
+x1_grid = np.linspace(X[:,0].min(), X[:,0].max(), 400)
+x2_grid = np.linspace(X[:,1].min(), X[:,1].max(), 400)
+xx1_grid, xx2_grid = np.meshgrid(x1, x2)
+grid = np.c_[xx1_grid.ravel(), xx2_grid.ravel()]
+Z = clf_cv.predict(grid).reshape(xx1.shape)
+plt.contourf(xx1, xx2, Z, alpha=0.3)
+plt.xlabel("Altitude")
+plt.ylabel("Aspect")
+plt.show()
+
+
+
+
+
+
+
 # fit random forest
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
-# Split
+# cross validation split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
 # Model
-model = RandomForestClassifier(
+rf = RandomForestClassifier(
     n_estimators=100,
     max_depth=20,
     random_state=42
 )
 
 # Train
-model.fit(X_train, y_train)
+rf.fit(X_train, y_train)
 
 # Predict
-y_pred = model.predict(X_test)
+y_pred = rf.predict(X_test)
 
 # Evaluate
 print("Accuracy:", accuracy_score(y_test, y_pred))
 print(classification_report(y_test, y_pred))
 
 
-# prediction surface over x1/x2 plane
+# prediction surface over x1/x2 plane vs best decision tree
 x1 = np.linspace(X[:,0].min(), X[:,0].max(), 400)
 x2 = np.linspace(X[:,1].min(), X[:,1].max(), 400)
 xx1, xx2 = np.meshgrid(x1, x2)
 grid = np.c_[xx1.ravel(), xx2.ravel()]
-Z = model.predict(grid).reshape(xx1.shape)
-plt.contourf(xx1, xx2, Z, alpha=0.3)
-# plt.scatter(X[:10000,0], X[:10000,1], c=y[:10000], s=1)
-plt.xlabel("Altitude")
-plt.ylabel("Aspect")
+Z = [clf_cv.predict(grid).reshape(xx1.shape),
+     rf.predict(grid).reshape(xx1.shape)]
+fig,axs = plt.subplots(1,2,figsize=(7,4))
+axs[0].contourf(xx1, xx2, Z[0], alpha=0.3)
+axs[0].set_title("Decision tree")
+axs[0].set_xlabel("Altitude")
+axs[0].set_ylabel("Aspect")
+axs[1].contourf(xx1, xx2, Z[1], alpha=0.3)
+axs[1].set_title("Random forest")
+axs[1].set_xlabel("Altitude")
+axs[1].set_ylabel("Aspect")
+plt.tight_layout()
 plt.show()
 
 
@@ -263,5 +351,53 @@ plt.colorbar(cf, label="probability")
 plt.xlabel("Altitude")
 plt.ylabel("Aspect")
 plt.show()
+
+
+
+# fit gradient boosted decision tree with XGBoost
+import xgboost as xgb
+
+
+# target (last column) tree cover encoded as integer 1-7. we coarse-grain the
+# tree type into fir (1) and non-fir species (0)
+cover = covtype_data[:, -1]
+y = np.zeros_like(cover)
+y[ np.isin(cover, [1,6]) ] = 1
+
+# use all features; 0: Elevation [m], 1:
+# Aspect [azimuth], 2: Slope [deg], 3: Horz. Dist. to Water [m], 4: Vert. Dist.
+# to Water [m], 5: Horz. Dist. to Road [m]
+i_feat = [0, 1, 2, 3, 4, 5]
+X = covtype_data[:, i_feat]
+
+
+# cross validation split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42, stratify=y)
+
+
+# simple XGB model (very weak learners, few boosting rounds 
+clf_xgb = xgb.XGBClassifier(
+    n_estimators = 10,
+    max_depth = 1,
+    random_state = 42
+)
+clf_xgb.fit(X_train, y_train)
+
+# predict
+y_pred_xgb = clf_xgb.predict(X_test)
+
+# evaluate
+acc_xgb = accuracy_score(y_test, y_pred_xgb)
+print(acc_xgb) # accuracy about .72 
+
+
+
+# compare with standard random forest with same number of weak learners
+clf_rf = RandomForestClassifier(n_estimators=10, random_state=42, max_depth=1)
+clf_rf.fit(X_train, y_train)
+y_pred_rf = clf_rf.predict(X_test)
+acc_rf = accuracy_score(y_test, y_pred_rf)
+print(acc_rf) # accuracy about 0.6, much lower than boosting
+
 
 

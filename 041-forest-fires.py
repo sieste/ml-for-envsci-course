@@ -54,25 +54,45 @@ y_enc = le.fit_transform(y)
 # train/test split
 X_train, X_test, y_train, y_test = train_test_split(X, y_enc, test_size=0.25, random_state=42, stratify=y_enc)
 
-# with only about 100 examples we should keep the model fairly simple to avoid
-# overfitting
+# fit and visualise a single small decision tree
 clf = DecisionTreeClassifier(
-    max_depth=4, min_samples_split=5, min_samples_leaf=2, max_features=2, 
+    max_depth=3, 
     random_state=42
 )
-clf.fit(X_train, y_train)
-
-y_pred = clf.predict(X_test)
-
-# show fitted tree
+clf.fit(X, y)
 tree.plot_tree(clf, feature_names=['temp','rh','wind','rain'], 
                class_names=['fire','no fire'], fontsize=8)
 plt.show()
+
+
+# fit random forest
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+# cross validation split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Model
+rf = RandomForestClassifier(
+    n_estimators=100,
+    max_depth=20,
+    random_state=42
+)
+
+# Train
+rf.fit(X_train, y_train)
+
+
+
 
 # evaluate fitted tree
 accuracy = accuracy_score(y_test, y_pred)
 cm = confusion_matrix(y_test, y_pred, normalize='true')
 report = classification_report(y_test, y_pred)
+
 
 
 

@@ -5,20 +5,20 @@
 
 \title{Introduction to Machine Learning for Environmental Science}
 
-
-\begin{document}
-
-\maketitle
-
-\begin{frame}
-\textbf{This 2-day workshop introduces core concepts of machine learning
+\date{
+{\tiny \textbf{This 2-day workshop introduces core concepts of machine learning
 including common algorithms, standard workflows and key software
 libraries. The focus will be on supervised machine learning for
 regression and classification using a range of methods such as random
 forests and deep convolutional neural networks. The material will be
 taught through a mix of theory and practical examples across different
 environmental sciences such as meteorology and ecology.}
-\end{frame}
+}}
+
+\begin{document}
+
+\maketitle
+
 
 \section{Introduction}
 
@@ -99,7 +99,7 @@ What do these examples have in common?
 \item predict crop yield based on agricultural practice, soil nutrients, pests
 \end{itemize}
 \item The goal of supervised ML is to \textbf{build a model} that predicts outcomes based on available features.
-\item A "good" ML model is one that produces accurate predictions.
+\item A "good" ML model is one that produces \textbf{accurate predictions}.
 \end{itemize}
 \end{frame}
 
@@ -152,6 +152,7 @@ TODO: example outputs from a regression model and a classification model used la
 \end{itemize}
 \end{frame}
 
+
 \begin{frame}{Loss function}
 \begin{itemize}
 \item A loss function \(L(\hat{y},y)\) is a function that quantifies \textbf{how different} the prediction \(\hat{y}\) is to the target outcome \(y\).
@@ -160,6 +161,7 @@ TODO: example outputs from a regression model and a classification model used la
 \item Otherwise the choice of loss function is \textbf{often ambiguous} and difficult to fully justify a particular choice.
 \end{itemize}
 \end{frame}
+
 
 \begin{frame}{Loss function}
 \begin{itemize}
@@ -175,8 +177,8 @@ TODO: example outputs from a regression model and a classification model used la
 \end{itemize}
 \item \textbf{Multivariate classification} (where \(y = (0,\dots,1,\dots,0)\) is a binary vector indicating which of \(k\) classes occurs and \(\hat{y}\) is a vector of \(k\) class probabilities)
 \begin{itemize}
-\item Cross-entropy loss \(L(\hat{y},y) = - \sum_{i=1}^k y_k \log \hat{y}_k\)
-\item Focal loss \(L(\hat{y},y) = - \sum_{i=1}^k y_k (1-\hat{y})^\gamma \log \hat{y}_k\)
+\item Cross-entropy loss \(L(\hat{y},y) = - \sum_{i=1}^k y_i \log \hat{y}_i\)
+\item Focal loss \(L(\hat{y},y) = - \sum_{i=1}^k y_i (1-\hat{y}_i)^\gamma \log \hat{y}_i\)
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -192,7 +194,7 @@ TODO: example outputs from a regression model and a classification model used la
 \item achieve minimal average loss when compared to the targets \(y_1, \dots, y_n\) in the training data set
 \item using an appropriate loss function \(L(\hat{y}, y)\).
 \end{itemize}
-\item \textbf{The Empirical Loss Minimisation paradigm:}
+\item \textbf{The Empirical Loss Minimisation paradigm for ML:}
 \[\hat{\fat\theta} = \underset{\fat\theta}{\mathrm{argmin}}\frac1n\sum_{i=1}^n L\left[f(\fat{x}_i; \fat\theta), y_i\right]\]
 \item The trained model with parameters \(\hat{\fat\theta}\) can then be used to make predictions \(\hat{y}^*\) based on new feature vectors \(\fat{x}^*\)
 \[\hat{y}^* = f(\fat{x}^*; \hat{\fat\theta})\]
@@ -207,8 +209,9 @@ To train a ML model by empirical loss minimisation we need:
 \item a loss function \(L(\hat{y},y)\) that quantifies how close model output \(\hat{y}\) is to the target outcome \(y\)
 \item a search algorithm to find parameters that minimise the loss 
 \end{itemize}
-The combination of training data set, search algorithm, model function \(f(\fat{x};\fat\theta)\) and loss function \(L(\hat{y},y)\) determine the ML approach and \textbf{these details should always be reported when documenting ML results.}
+The combination of training data set, search algorithm, model function \(f(\fat{x};\fat\theta)\) and loss function \(L(\hat{y},y)\) determine the ML approach and \textbf{these details should always be reported when documenting your ML model development.}
 \end{frame}
+
 
 \subsection{Examples, model evaluation}
 
@@ -246,30 +249,23 @@ The combination of training data set, search algorithm, model function \(f(\fat{
 
 \begin{frame}[fragile]{Linear Regression in Scikit-Learn}
 \begin{lstlisting}[language=python]
-import numpy as np
 from sklearn.linear_model import LinearRegression
 
-# load file
-t7110 = np.loadtxt("t7110.dat", comments="#")
-
-# extract features (july temperatures) and targets (august temperatures)
-x = t7110[:, 7]
-y = t7110[:, 8]
-
-# sklearn expects k features to be stored in a 2d array with k columns
-x = x.reshape(-1, 1)   
+# data wrangling: 
+# inputs: X - (n x k) array of n examples, k features
+# targets: y - 1d array of length n
 
 # initialise a linear regression model
 model = LinearRegression()
 
 # fit the model to data
-model.fit(x, y)
+model.fit(X, y)
 
 # extract parameter estimates from fitted model
 theta_hat = np.array([model.intercept_, model.coef_[0] ])
 
 # calculate predictions in training data
-y_hat = model.predict(x)
+y_hat = model.predict(X)
 
 # calculate predictions on new data
 x_new = np.linspace(15, 20, 100).reshape(-1,1)
@@ -281,7 +277,7 @@ y_new = model.predict(x_new)
 
 \begin{frame}{How good is my model?}
 \begin{itemize}
-\item The model outputs \(\hat{y}_1, \dots, \hat{y}_n\) be compared to the targets \(y_1, \dots, y_n\) using a suitable error metric.
+\item The model outputs \(\hat{y}_1, \dots, \hat{y}_n\) must be compared to the targets \(y_1, \dots, y_n\) using a suitable error metric.
 \item For example root mean squared error (RMSE) \[RMSE = \sqrt{\frac1n \sum_{i=1}^n (\hat{y}_i - y_i)^2}\]
 \item Our model has \(RMSE \approx 0.9\) -- Is that "good"?
 \item Getting \(RMSE > 0\) means our model is not perfect, but how bad is it?
@@ -296,7 +292,7 @@ y_new = model.predict(x_new)
 \begin{itemize}
 \item An alternative (competing) model for the same target.
 \item Climatology (constant mean): \[\hat{y}^{(clim)}_i = \frac1n \sum_{i=1}^n y_i\]
-\item Persistence (last available observation of the target); here: \[\hat{y}^{(pers)}_i = x_i\]
+\item Persistence (last available observation of the target); here: \[\hat{y}^{(pers)}_i = y(t_i - \Delta)\]
 \item Any other simple estimate of the target that could be calculated with reasonable effort given the same inputs as our model.
 \item In fact, linear regression itself is often a good reference to benchmark more complicated ML model.
 \end{itemize}
@@ -389,7 +385,7 @@ MORE HERE Skill scores of linear regression model
 \begin{frame}{In-sample vs Out-of-sample error}
 \begin{itemize}
 \item Our goal is to train a model that generalises well to new data. 
-\item Loss on training data (in-sample error) is too optimistic because the model has seen the data.
+\item Loss on training data (in-sample error) is often too optimistic because the model "has seen" the data.
 \item Overfitting: A model achieves very low training loss by "regurtitating" the training data, including any noise and accidental patterns. Overfitted models generalise poorly to new data.
 \item Loss on previously unseen data (out-of sample error) is what we are really interested in.
 \item It is good practice to remove a fraction of data (e.g. 20\%) during training and use only for model testing.
@@ -454,7 +450,7 @@ MORE HERE Skill scores of linear regression model
 \end{minipage}%
 \begin{itemize}
 \item Classification function for feature vector \(\fat{x}=(x_1,x_2)\) \[f(\fat{x};{\color{green}\fat\theta}) = \begin{cases} 0 & \text{if}\quad x_1 < {\color{green}0}\\ 0 & \text{if}\quad x_1 > {\color{green}0},\ x_2 > {\color{green}0.5} \\ 0 &\text{if}\quad x_1 > {\color{green}0},\ x_2 < {\color{green}-0.5} \\ 1 & \text{otherwise}\end{cases}\]
-\item If decision thresholds are trainable parameters, a decision tree becomes an ML model.
+\item If decision thresholds are trainable parameters, a decision tree becomes a ML model for classification.
 \end{itemize}
 \end{frame}
 
@@ -501,12 +497,27 @@ clf.predict(np.array([0.5,0]).reshape(-1,2))
 \end{center}
 \end{minipage}%
 
-The trained decision tree recovers the correct classification boundary.
+The trained decision tree recovers the correct classification boundary in this simple example.
 \end{frame}
 
 
-\begin{frame}{WIP: Code example: Tree cover classification}
-TODO: Data set (plot), no code required it's on previous slide, decision surface
+\begin{frame}[fragile]{Code example: Tree cover classification}
+\begin{minipage}{.5\textwidth}
+\begin{lstlisting}[language=python]
+import gzip
+import numpy as np
+path = "covtype.data.gz"
+with gzip.open(path, "rt") as f:
+  arr = np.genfromtxt(f, delimiter=",")
+\end{lstlisting}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\includegraphics[width=\textwidth]{fig/tree-covertype-data.png}
+\end{minipage}%
+\begin{itemize}
+\item Cover type data contains data from over 500,000 trees, including topographic, environmental, hydrological, and species information
+\item Here we wish to predict whether a tree is a pine species, given its height (metres) and aspect (degrees from North)
+\end{itemize}
 \end{frame}
 
 
@@ -523,8 +534,7 @@ tree.plot_tree(clf,
                  "aspect"],
   class_names=["not_fir", 
                "fir"],
-  filled=True, 
-  rounded=True,
+  filled=True, rounded=True,
   fontsize=8)
 plt.show()
 \end{lstlisting}
@@ -579,6 +589,97 @@ plt.show()
 \end{frame}
 
 
+\begin{frame}{Feature importance}
+\begin{itemize}
+\item To interpret a trained ML model it is often interesting to ask "which feature contributes most to the model skill?"
+\item This is a very difficult question when there are complex interactions between features.
+\item Some options include
+\begin{itemize}
+\item Quick and dirty, for decision trees: \texttt{clf.feature\_importances\_} (mean impurity decrease)
+\item More informative and generic: \texttt{sklearn.inspection.permutation\_importance} (performance drop when a feature is randomly shuffled)
+\item Widely used, but complicated, measure for reporting: SHAP values (global importance measure)
+\item Many more (further reading)
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Hyperparameters}
+\begin{minipage}{.7\textwidth}
+\begin{itemize}
+\item A hyperparameter is a model parameter that is not inferred from the training data by the learning algorithm.
+\item For decision trees, model parameters are the decision thresholds, and hyperparameters can be
+\begin{itemize}
+\item minimum/maximum tree depth
+\item maximum number of leaf nodes
+\item minimum number of samples per split
+\item impurity measure
+\end{itemize}
+\end{itemize}
+\end{minipage}%
+\begin{minipage}{.3\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{fig/tree-covertype-maxdepths.png}
+\end{center}
+\end{minipage}%
+\end{frame}
+
+
+\begin{frame}{Hyperparameter optimisation}
+\begin{itemize}
+\item Cross-validation: 
+\begin{itemize}
+\item randomly split the training data into \(n_{CV}\) subsets (usually 5 or 10)
+\item use \(n_{CV} - 1\) subsets to train the model 
+\item evaluate the model on the left-out subset
+\item repeat for each of the \(n_{CV}\) folds
+\item average the \(n_{CV}\) out-of-sample losses into a single cross-validation loss
+\end{itemize}
+\item Grid search:
+\begin{itemize}
+\item Enumerate all \(n_{comb}\) combinations of hyperparameters
+\item Calculate cross validation loss for each combination
+\item Choose the hyperparameter setting with lowest cv loss
+\item Fit the model with the optimised hyperparameters
+\end{itemize}
+\item The computational cost of exhaustiv grid search with cross validation is \(n_{CV} \times n_{comb}\) larger than training a single model.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Hyperparameter optimisation}
+\begin{minipage}{.7\textwidth}
+\begin{lstlisting}[language=python]
+from sklearn.model_selection import GridSearchCV
+
+# see all model hyperparameters
+clf.get_params()
+
+# initialise grid search
+clf_cv = GridSearchCV(
+    estimator=clf,
+    param_grid={"max_depth": [4,8,16,32], 
+                "criterion": ["gini", "entropy"]},
+    cv=5
+)
+
+# run grid search
+clf_cv.fit(X, y)
+
+# see best hyperparameters
+clf_cv.best_params_
+
+# predict using optimised model
+clf_cv.predict(X)
+\end{lstlisting}
+\end{minipage}%
+\begin{minipage}{.3\textwidth}
+\includegraphics[width=\textwidth]{fig/tree-gridsearch-opt.png}
+\end{minipage}%
+
+\end{frame}
+
 
 \subsection{Random Forest, XGBoost}
 
@@ -586,85 +687,134 @@ plt.show()
 \begin{frame}{Random Forest}
 
 \begin{itemize}
-\item A RF is an ensemble of decision trees.
+\item A RF is an ensemble of indepently trained decision trees.
 \item Each tree is trained on random subsets of training data and input features.
-\item Each tree makes a prediction and the forest aggregates them.
+\item Each tree makes a prediction and the forest aggregates them by:
 \begin{itemize}
-\item Classification: Majority vote
-\item Regression: Average
+\item Majority vote (Classification)
+\item Averaging (Regression)
 \end{itemize}
-\item Improves robustness and avoids overfitting compared to single decision tree.
+\item Ensembling improves robustness and avoids overfitting compared to single decision tree.
 \end{itemize}
 \end{frame}
 
 
 
-\begin{frame}[fragile]{Example}
+\begin{frame}[fragile]{Code example: Random forest}
 \begin{lstlisting}[language=python]
 from sklearn.ensemble import RandomForestClassifier
+
+# initialise random forest classifier
 rfc = RandomForestClassifier(
     n_estimators=100, # number of trees
     max_depth=20,     # maximum tree depth
     random_state=42   # reproducibility
 )
+
+# train and predict
 model.fit(X, y)
 y_pred = model.predict(X)
 \end{lstlisting}
-MORE HERE: example data, single tree vs RF decision surfaces
+\begin{center}
+\includegraphics[width=.7\textwidth]{fig/tree-vs-forest.png}
+\end{center}
 \end{frame}
+
+
 
 
 \begin{frame}{Boosting}
 \begin{itemize}
-\item In ensemble methods (such as RF), each classifier (tree) is independently trained and optimised for maximum accuracy.
-\item A boosting algorithm trains a chain of weak classifiers sequentially. 
+\item Ensemble methods (such as RF) train a number of \textbf{strong} classifiers \textbf{independently}.
+\item \textbf{Boosting methods} trains a chain of \textbf{weak} classifiers \textbf{sequentially}.
+\item A "weak learner" is simple, fast to train, and has low individual accuracy.
 \item Core algorithm:
 \begin{itemize}
 \item train a simple model
-\item calculate its errors over the training data
+\item calculate the model's errors over the training data
 \item train the next model to take the same inputs but predict the previous model's errors
-\item repeat, then aggregate all models (often with weights)
+\item repeat, then sum the outputs of all models (often with weights)
 \end{itemize}
-\item Throughtout the sequence the model is improved by gradually refining the prediction.
+\item Throughout the boosting sequence the model is improved by gradually refining the prediction.
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}{WIP: Gradient Boosting, XGBoost}
+\begin{frame}{Gradient Boosting}
+Technical details of gradient boosting:
 \begin{itemize}
-\item Gradients of the loss function \(g_i = \frac{\partial L(\hat{y}_i,y_i)}{\partial \hat{y}_i}\) approximate errors.
+\item \textbf{Gradients} of the loss function \(g_i = \frac{\partial L(\hat{y}_i,y_i)}{\partial \hat{y}_i}\) approximate prediction errors/residuals.
 \item Changing \(\hat{y}_i\) proportional to \(-g_i\) will decrease the loss.
-\item In gradient boosting, each tree predicts the negative gradient \(\frac{\partial L(\hat{y},y)}{\partial \hat{y}}\) of the previous tree
-\item XGBoost is a popular library for Gradient Boosting
-\item MORE HERE
+\item In \textbf{gradient boosting}, each tree predicts the negative gradient \(\frac{\partial L(\hat{y},y)}{\partial \hat{y}}\) of the loss of the previous tree.
+\item If \(f_{i+1}(\fat{x};\fat\theta_{i+1})\) is the output of the \(i+1\)-st learner, the \(i+1\)st model prediction is \[\hat{y}_{i+1} = \hat{y}_i + \eta f_{i+1}(\fat{x};\fat\theta_{i+1})\] where \(\eta\) is the \textbf{learning rate}.
 \end{itemize}
 \end{frame}
 
-
-
-\begin{frame}{WIP: Forest fire prediction}
-
+\begin{frame}[fragile]{XGBoost}
+\begin{center}
+\includegraphics[width=.5\textwidth]{fig/xgboost-logo-trimmed.png}
+\end{center}
+\begin{itemize}
+\item XGBoost is a popular and efficient library for Gradient Boosting models for regression and classification
+\item Website: \texttt{xgboost.ai}
+\item Very similar naming conventions to scikit-learn:
+\end{itemize}
+\begin{lstlisting}[language=python]
+import xgboost as xgb
+clf = xgb.XGBClassifier(n_estimators = 100, max_depth=5)
+clf.fit(X_train, y_train)
+y_hat = clf.predict(X_test)
+\end{lstlisting}
 \end{frame}
 
-\begin{frame}{WIP: Evaluation metrics in scikit-learn}
+
+\begin{frame}[fragile]{XGBoost for Boosted Decision Trees}
+\begin{lstlisting}[language=python]
+import xgboost as xgb
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+# simple XGB model: very weak learners, few boosting rounds
+clf_xgb = xgb.XGBClassifier(
+    n_estimators = 10,
+    max_depth = 1,
+    random_state = 42
+)
+
+# fit and predict
+clf_xgb.fit(X_train, y_train)
+y_pred_xgb = clf_xgb.predict(X_test)
+
+# evaluate test data
+accuracy_score(y_test, y_pred_xgb)
+# accuracy about 0.72 
+
+# random forest with same complexity
+clf_rf = RandomForestClassifier(
+    n_estimators=10, random_state=42, max_depth=1)
+clf_rf.fit(X_train, y_train)
+y_pred_rf = clf_rf.predict(X_test)
+accuracy_score(y_test, y_pred_rf)
+# accuracy only about 0.6
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}{Evaluation metrics in scikit-learn}
 \begin{itemize}
-\item accuracy
-\item confusion matrix
+\item Scikit-learn offers numerous evaluation metrics to compare a set of predictions \(\hat{y}_1,\dots,\hat{y}_n\) to a corresponding targets \(y_1,\dots,y_n\).
+\item Some commonly used evaluation metrics/methods are
+\begin{itemize}
+\item Accuracy
+\item Confusion matrix
+\item Classification report
 \item ROC/AUC analysis
-\item classification report
-\item many more for further reading
+\end{itemize}
+\item See \url{scikit-learn.org/stable/modules/model_evaluation.html} for a full list and details.
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}{WIP: Variable importance}
-\begin{itemize}
-\item quick and dirty: clf.feature\_importances\_ (mean impurity decrease)
-\item more informative: sklearn.inspection.permutation\_importance (performance drop when a feature is shuffled)
-\item "explainability"/reporting: SHAP values (global importance measure, standard)
-\item many more for further reading
-\end{itemize}
-\end{frame}
 
 
 
@@ -672,8 +822,8 @@ MORE HERE: example data, single tree vs RF decision surfaces
 
 \begin{frame}{Artificial neuron (Perceptron)}
 \begin{itemize}
-\item An artificial neuron (perceptron) is a function 
-\[y = f(\fat{x}; \fat{w}, b) = \varphi\left( w_1 \cdot x_1 + \dots + w_k \cdot x_k + b\right)\]
+\item An artificial neuron (perceptron) is a mathematical function 
+\[\hat{y} = f(\fat{x}; \fat{w}, b) = \varphi\left( w_1 \cdot x_1 + \dots + w_k \cdot x_k + b\right)\]
 \item where
 \begin{itemize}
 \item \(\fat{x} = (x_1, \dots, x_k)\) is the \(k\)-dimensional input vector
@@ -682,6 +832,7 @@ MORE HERE: example data, single tree vs RF decision surfaces
 \item \(b\) is the bias
 \item \(\varphi(\cdot)\) is the activation function
 \end{itemize}
+\item A neuron takes inputs \(\fat{x}=(x_1, \dots, x_k)\), calculates a \textbf{linear combination}, and applies a non-linear activation function.
 \end{itemize}
 \end{frame}
 
@@ -703,37 +854,97 @@ MORE HERE: example data, single tree vs RF decision surfaces
 
 \begin{frame}{Single-layer perceptron}
 \begin{itemize}
-\item multiple perceptrons (each with different weights and biases) calculating their outputs in parallel
-\[y_i = \varphi\left(\fat{w}_i^T \fat{x} + b_i\right)\] 
+\item In a SLP, \textbf{several perceptrons} (each with different weights and biases) calculating several outputs in parallel
+\item produce a \textbf{vector of outputs} \(y_1,\dots,y_N\) where
+\[y_i = \varphi\left(w_{i,1} x_1 + \dots + w_{i,k} x_k + b_i\right) = \varphi\left(\fat{w_i} \cdot \fat{x} + b_i\right)\]
 \end{itemize}
 \begin{center}
 \includegraphics[width=.5\textwidth]{fig/nn-single-layer-perceptron.png}
 \end{center}
 \end{frame}
 
-\begin{frame}{Examples}
-Examples of randomly initialised 1d and 2d single layer perceptrons with increasing numbers of neurons, illustrating increasing flexibility and "expressive power".
+\begin{frame}{Multilayer perceptron}
+\begin{minipage}{.6\textwidth}
+\begin{itemize}
+\item In an MLP, \textbf{perceptrons are arranged in multiple layers}
+\item Each layer computes a \textbf{vector of activations} that serves as input to the next layer
+\item For layer $\ell$, the vector of outputs \(\fat{y}^{(\ell)}=(y^{(\ell)}_1, \dots y^{(\ell)}_{n_\ell})\) is calculated from the previous one by
+\[
+y^{(\ell)}_i = \varphi\left(\fat{w}^{(\ell)}_i \cdot \fat{y}^{(\ell-1)} + b^{(\ell)}_i\right)
+\]
+\end{itemize}
+\end{minipage}%
+\begin{minipage}{.4\textwidth}
 \begin{center}
-\includegraphics[width=.7\textwidth]{fig/nn-randomrelu1d.png}
-\includegraphics[width=.7\textwidth]{fig/nn-randomrelu2d.png}
+\includegraphics[width=.9\textwidth]{fig/multilayer-perceptron.png}
 \end{center}
+\end{minipage}%
 \end{frame}
 
-\begin{frame}{WIP - Terminology}
+
+
+
+\begin{frame}{Examples}
+Randomly initialised ReLU networks with one hidden layer:
+\vfill
+\begin{minipage}{.4\textwidth}
+\begin{center}
+\includegraphics[width=.7\textwidth]{fig/multilayer-perceptron-1d.png}
+\end{center}
+\end{minipage}%
+\begin{minipage}{.6\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{fig/nn-randomrelu1d.png}
+\end{center}
+\end{minipage}
+\vfill
+\begin{minipage}{.4\textwidth}
+\begin{center}
+\includegraphics[width=.7\textwidth]{fig/multilayer-perceptron-2d.png}
+\end{center}
+\end{minipage}%
+\begin{minipage}{.6\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{fig/nn-randomrelu2d.png}
+\end{center}
+\end{minipage}%
+\end{frame}
+
+
+
+\begin{frame}{Terminology}
 \begin{itemize}
-\item Neuron, node
-\item Weight
-\item Bias
-\item Hidden layer
-\item Output layer
+\item \textbf{Weight}: trainable parameter scaling an input
+\item \textbf{Bias}: trainable offset added to the weighted sum
+\item \textbf{Pre-activation}: linear combination $z = \fat{w}\cdot\fat{x} + b$
+\item \textbf{Activation function}: nonlinear function applied to pre-activation
+\item \textbf{Input layer}: layer providing the input features 
+\item \textbf{Output layer}: final layer producing the model output(s)
+\item \textbf{Hidden layer(s)}: layer(s) between input and output layers
+\item \textbf{Parameters}: all trainable weights and biases of the network
+\item \textbf{Forward pass}: computation of outputs from inputs by the network
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Multilayer perceptron}
+
+\begin{frame}[fragile]{PyTorch, TensorFlow}
+\begin{itemize}
+\item Low-level frameworks for implementing neural networks.
+\item Automatic differentiation, backpropagation.
+\item Fast training on multicore CPUs and GPUs "out of the box".
+\item PyTorch is used in research, TF more widely used in production.
+\item See \url{pytorch.org} and \url{tensorflow.org}.
+\end{itemize}
 \end{frame}
 
 
-\begin{frame}{The Keras API}
+\begin{frame}[fragile]{Keras}
+\begin{itemize}
+\item High-level API for building NNs, based on TensorFlow or PyTorch.
+\item Simple syntax for composing standard layers into complex deep NN architectures.
+\item Ideal for learning and prototyping.
+\item See \url{keras.io}.
+\end{itemize}
 \end{frame}
 
 
@@ -753,7 +964,6 @@ crossentropy-loss for classification, squared-error loss for regression
 
 \begin{frame}{Backpropagation}
 \end{frame}
-
 
 \begin{frame}{Stochastic gradient descent}
 \end{frame}

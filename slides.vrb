@@ -1,12 +1,7 @@
-\frametitle{Example}
-\begin{lstlisting}[language=python]
-from sklearn.ensemble import RandomForestClassifier
-rfc = RandomForestClassifier(
-    n_estimators=100, # number of trees
-    max_depth=20,     # maximum tree depth
-    random_state=42   # reproducibility
-)
-model.fit(X, y)
-y_pred = model.predict(X)
-\end{lstlisting}
-MORE HERE: example data, single tree vs RF decision surfaces
+\frametitle{Keras}
+\begin{itemize}
+\item High-level API for building NNs, based on TensorFlow or PyTorch.
+\item Simple syntax for composing standard layers into complex deep NN architectures.
+\item Ideal for learning and prototyping.
+\item See \url{keras.io}.
+\end{itemize}
