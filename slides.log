@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.2.21)  13 JAN 2026 23:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.2.21)  15 JAN 2026 16:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1946,7 +1946,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [58
 
  <./fig/multilayer-perceptron.png>]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 911--911
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 914--914
  [][][][] [][]  
  []
 
@@ -1954,23 +1954,23 @@ Overfull \hbox (2.39282pt too wide) in paragraph at lines 911--911
 File: fig/multilayer-perceptron-1d.png Graphic file (type png)
 <use fig/multilayer-perceptron-1d.png>
 Package pdftex.def Info: fig/multilayer-perceptron-1d.png  used on input line 9
-11.
+14.
 (pdftex.def)             Requested size: 86.03946pt x 72.3378pt.
 <fig/nn-randomrelu1d.png, id=1288, 860.013pt x 208.6194pt>
 File: fig/nn-randomrelu1d.png Graphic file (type png)
 <use fig/nn-randomrelu1d.png>
-Package pdftex.def Info: fig/nn-randomrelu1d.png  used on input line 911.
+Package pdftex.def Info: fig/nn-randomrelu1d.png  used on input line 914.
 (pdftex.def)             Requested size: 184.3758pt x 44.72496pt.
 <fig/multilayer-perceptron-2d.png, id=1289, 604.2575pt x 443.6575pt>
 File: fig/multilayer-perceptron-2d.png Graphic file (type png)
 <use fig/multilayer-perceptron-2d.png>
 Package pdftex.def Info: fig/multilayer-perceptron-2d.png  used on input line 9
-11.
+14.
 (pdftex.def)             Requested size: 86.03946pt x 63.16768pt.
 <fig/nn-randomrelu2d.png, id=1290, 860.013pt x 296.307pt>
 File: fig/nn-randomrelu2d.png Graphic file (type png)
 <use fig/nn-randomrelu2d.png>
-Package pdftex.def Info: fig/nn-randomrelu2d.png  used on input line 911.
+Package pdftex.def Info: fig/nn-randomrelu2d.png  used on input line 914.
 (pdftex.def)             Requested size: 184.3758pt x 63.52391pt.
 
 Overfull \hbox (2.39282pt too wide) has occurred while \output is active
@@ -1981,7 +1981,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 
  <./fig/multilayer-perceptron-1d.png> <./fig/nn-randomrelu1d.png> <./fig/multil
 ayer-perceptron-2d.png> <./fig/nn-randomrelu2d.png>]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 927--927
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 930--930
  [][][][] [][]  
  []
 
@@ -1993,14 +1993,14 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [60
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 930--930
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 935--935
  [][][][] [][]  
  []
 
 \openout4 = `slides.vrb'.
 
 
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 938--938
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 943--943
  [][][][] [][]  
  []
 
@@ -2012,14 +2012,14 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [61
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 941--941
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 946--946
  [][][][] [][]  
  []
 
 \openout4 = `slides.vrb'.
 
 
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 948--948
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 953--953
  [][][][] [][]  
  []
 
@@ -2031,7 +2031,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [62
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 952--952
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 957--957
  [][][][] [][]  
  []
 
@@ -2043,7 +2043,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [63
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 955--955
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 960--960
  [][][][] [][]  
  []
 
@@ -2055,7 +2055,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [64
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 960--960
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 965--965
  [][][][] [][]  
  []
 
@@ -2067,10 +2067,15 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [65
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 963--963
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 981--981
  [][][][] [][]  
  []
 
+<fig/dense-vs-local.png, id=1399, 685.56125pt x 757.83125pt>
+File: fig/dense-vs-local.png Graphic file (type png)
+<use fig/dense-vs-local.png>
+Package pdftex.def Info: fig/dense-vs-local.png  used on input line 981.
+(pdftex.def)             Requested size: 110.6219pt x 122.27307pt.
 
 Overfull \hbox (2.39282pt too wide) has occurred while \output is active
  [][][][] [][]  
@@ -2078,11 +2083,16 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 
 [66
 
-]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 966--966
+ <./fig/dense-vs-local.png>]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 989--989
  [][][][] [][]  
  []
 
+<fig/cnn-illustration-1.png, id=1414, 798.985pt x 693.59125pt>
+File: fig/cnn-illustration-1.png Graphic file (type png)
+<use fig/cnn-illustration-1.png>
+Package pdftex.def Info: fig/cnn-illustration-1.png  used on input line 989.
+(pdftex.def)             Requested size: 153.64493pt x 133.3712pt.
 
 Overfull \hbox (2.39282pt too wide) has occurred while \output is active
  [][][][] [][]  
@@ -2090,11 +2100,16 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 
 [67
 
-]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 969--969
+ <./fig/cnn-illustration-1.png>]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1000--1000
  [][][][] [][]  
  []
 
+<fig/cnn-illustration-2.png, id=1430, 820.06375pt x 259.97125pt>
+File: fig/cnn-illustration-2.png Graphic file (type png)
+<use fig/cnn-illustration-2.png>
+Package pdftex.def Info: fig/cnn-illustration-2.png  used on input line 1000.
+(pdftex.def)             Requested size: 184.3758pt x 58.44736pt.
 
 Overfull \hbox (2.39282pt too wide) has occurred while \output is active
  [][][][] [][]  
@@ -2102,11 +2117,16 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 
 [68
 
-]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 973--973
+ <./fig/cnn-illustration-2.png>]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1014--1014
  [][][][] [][]  
  []
 
+<fig/cnn-illustration-3.png, id=1445, 820.06375pt x 354.32375pt>
+File: fig/cnn-illustration-3.png Graphic file (type png)
+<use fig/cnn-illustration-3.png>
+Package pdftex.def Info: fig/cnn-illustration-3.png  used on input line 1014.
+(pdftex.def)             Requested size: 184.3758pt x 79.65993pt.
 
 Overfull \hbox (2.39282pt too wide) has occurred while \output is active
  [][][][] [][]  
@@ -2114,8 +2134,8 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 
 [69
 
-]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 977--977
+ <./fig/cnn-illustration-3.png>]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1027--1027
  [][][][] [][]  
  []
 
@@ -2127,10 +2147,15 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [70
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 981--981
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1038--1038
  [][][][] [][]  
  []
 
+<fig/cnn-illustration-4.png, id=1473, 1341.01pt x 376.40625pt>
+File: fig/cnn-illustration-4.png Graphic file (type png)
+<use fig/cnn-illustration-4.png>
+Package pdftex.def Info: fig/cnn-illustration-4.png  used on input line 1038.
+(pdftex.def)             Requested size: 276.559pt x 77.62325pt.
 
 Overfull \hbox (2.39282pt too wide) has occurred while \output is active
  [][][][] [][]  
@@ -2138,8 +2163,8 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 
 [71
 
-]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 984--984
+ <./fig/cnn-illustration-4.png>]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1057--1057
  [][][][] [][]  
  []
 
@@ -2151,7 +2176,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [72
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 987--987
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1066--1066
  [][][][] [][]  
  []
 
@@ -2163,7 +2188,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [73
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 990--990
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1071--1071
  [][][][] [][]  
  []
 
@@ -2175,7 +2200,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [74
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 993--993
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1075--1075
  [][][][] [][]  
  []
 
@@ -2187,7 +2212,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [75
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 996--996
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1078--1078
  [][][][] [][]  
  []
 
@@ -2199,7 +2224,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [76
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 999--999
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1081--1081
  [][][][] [][]  
  []
 
@@ -2211,7 +2236,7 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
 [77
 
 ]
-Overfull \hbox (2.39282pt too wide) in paragraph at lines 1009--1009
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1085--1085
  [][][][] [][]  
  []
 
@@ -2221,6 +2246,78 @@ Overfull \hbox (2.39282pt too wide) has occurred while \output is active
  []
 
 [78
+
+]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1089--1089
+ [][][][] [][]  
+ []
+
+
+Overfull \hbox (2.39282pt too wide) has occurred while \output is active
+ [][][][] [][]  
+ []
+
+[79
+
+]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1093--1093
+ [][][][] [][]  
+ []
+
+
+Overfull \hbox (2.39282pt too wide) has occurred while \output is active
+ [][][][] [][]  
+ []
+
+[80
+
+]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1096--1096
+ [][][][] [][]  
+ []
+
+
+Overfull \hbox (2.39282pt too wide) has occurred while \output is active
+ [][][][] [][]  
+ []
+
+[81
+
+]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1099--1099
+ [][][][] [][]  
+ []
+
+
+Overfull \hbox (2.39282pt too wide) has occurred while \output is active
+ [][][][] [][]  
+ []
+
+[82
+
+]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1102--1102
+ [][][][] [][]  
+ []
+
+
+Overfull \hbox (2.39282pt too wide) has occurred while \output is active
+ [][][][] [][]  
+ []
+
+[83
+
+]
+Overfull \hbox (2.39282pt too wide) in paragraph at lines 1112--1112
+ [][][][] [][]  
+ []
+
+
+Overfull \hbox (2.39282pt too wide) has occurred while \output is active
+ [][][][] [][]  
+ []
+
+[84
 
 ]
 \tf@nav=\write6
@@ -2241,10 +2338,10 @@ Package rerunfilecheck Info: File `slides.out' has not changed.
 (rerunfilecheck)             Checksum: C7F99340A0C5E26E8E73B5FD8C0583E4;1115.
  ) 
 Here is how much of TeX's memory you used:
- 27427 strings out of 475735
- 531907 string characters out of 5784786
+ 27486 strings out of 475735
+ 533251 string characters out of 5784786
  2012759 words of memory out of 5000000
- 47437 multiletter control sequences out of 15000+600000
+ 47484 multiletter control sequences out of 15000+600000
  538690 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,19n,123p,428b,1383s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2269,10 +2366,10 @@ texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive
 fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texmf/fonts/type1/public/c
 m-super/sfso0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfso1000.pfb
 >
-Output written on slides.pdf (78 pages, 5409219 bytes).
+Output written on slides.pdf (84 pages, 5966632 bytes).
 PDF statistics:
- 1698 PDF objects out of 1728 (max. 8388607)
- 959 compressed objects within 10 object streams
- 165 named destinations out of 1000 (max. 500000)
- 365 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1790 PDF objects out of 2073 (max. 8388607)
+ 1010 compressed objects within 11 object streams
+ 177 named destinations out of 1000 (max. 500000)
+ 390 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -884,6 +884,7 @@ y^{(\ell)}_i = \varphi\left(\fat{w}^{(\ell)}_i \cdot \fat{y}^{(\ell-1)} + b^{(\e
 
 
 
+
 \begin{frame}{Examples}
 Randomly initialised ReLU networks with one hidden layer:
 \vfill
@@ -908,6 +909,8 @@ Randomly initialised ReLU networks with one hidden layer:
 \includegraphics[width=\textwidth]{fig/nn-randomrelu2d.png}
 \end{center}
 \end{minipage}%
+\vfill
+More nodes (units) produce more "flexible" curves.
 \end{frame}
 
 
@@ -925,6 +928,8 @@ Randomly initialised ReLU networks with one hidden layer:
 \item \textbf{Forward pass}: computation of outputs from inputs by the network
 \end{itemize}
 \end{frame}
+
+
 
 
 \begin{frame}[fragile]{PyTorch, TensorFlow}
@@ -959,6 +964,112 @@ Randomly initialised ReLU networks with one hidden layer:
 crossentropy-loss for classification, squared-error loss for regression
 \end{frame}
 
+
+\begin{frame}{Convolution}
+\begin{minipage}{.6\textwidth}
+\begin{itemize}
+\item Perceptrons are \textbf{densely connected} layers because every node in a layer receives outputs from all nodes in the previous layer.
+\item When inputs and outputs are high-dimensional, the number of trainable parameters in a dense layer becomes very large. 
+\item Convolution is a sparsely connected layer with where outputs are only connected to \textbf{spatially close inputs} and weights are \textbf{shared across the domain}.
+\end{itemize}
+\end{minipage}%
+\begin{minipage}{.4\textwidth}
+\begin{center}
+\includegraphics[width=.9\textwidth]{fig/dense-vs-local.png}
+\end{center}
+\end{minipage}%
+\end{frame}
+
+
+
+\begin{frame}{Convolution}
+\begin{center}
+\includegraphics[width=.5\textwidth]{fig/cnn-illustration-1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Convolution}
+\begin{itemize}
+\item The input data usually have multiple channels (color channels, pressure levels, variables)
+\item The convolution kernel must have the same number of channels as the input data.
+\end{itemize}
+\vfill
+\begin{center}
+\includegraphics[width=.6\textwidth]{fig/cnn-illustration-2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Convolution}
+\begin{itemize}
+\item By defining multiple convolution kernels, we produce multiple output channels from the same input.
+\end{itemize}
+\vfill
+\begin{center}
+\includegraphics[width=.6\textwidth]{fig/cnn-illustration-3.png}
+\end{center}
+\begin{itemize}
+\item This is the typical setup for a 2d convolution layer in a convolutional neural network.
+\item The trainable parameters in a 2d convolution are stored in a 4d data structure with dimensions (width, height, input channels, output channels).
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Convolution}
+
+\begin{itemize}
+\item inputs \(x[i,j,c]\) indexed by space \((i,j)\) and channel \(c=1,\dots,C\)
+\item outputs \(y[i,j]\) indexed by space \((i,j)\)
+\item kernel \(k[m,n,c]\) of width and height \(m = -w,\dots,+w\) and \(C\) channels
+\end{itemize}
+\[y[i,j] = \sum_{m = -w}^{w} \sum_{n = -w}^{w} \sum_{c=1}^C k[m,n,c] \cdot x[i+m,j+n,c]\]
+\end{frame}
+
+
+\begin{frame}{Convolution}
+\begin{itemize}
+\item Convolution layers can be chained to produce a deep convolutional neural network (Deep CNN).
+\end{itemize}
+\vfill
+\begin{center}
+\includegraphics[width=.9\textwidth]{fig/cnn-illustration-4.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Typical setup}
+\begin{itemize}
+\item A common situation in ML with spatial data:
+\begin{itemize}
+\item several input variables, each a 2d spatial field (input channels)
+\item the target is a single spatial field of the same size (output channel)
+\end{itemize}
+\item A typical CNN for such data has:
+\begin{itemize}
+\item 2-6 hidden convolution layers
+\item kernel size 3 or 5
+\item 16-256 channels per hidden layer
+\item 1 channel at output layer (to match the target)
+\end{itemize}
+\item This will produce models with \(10^4\) - \(10^6\) parameters, suitable for training locally on moderately large training data sets
+\item These hyperparameters can be explored and optimised as part of the ML model development.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Examples}
+\begin{itemize}
+\item Hazard prediction: MORE HERE
+\item Image segmentation: MORE HERE
+\item Next-time step prediction: MORE HERE
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Worked example: Radar nowcasting}
+MORE HERE
+\end{frame}
+
+
 \begin{frame}{Gradient descent}
 \end{frame}
 
@@ -976,15 +1087,6 @@ crossentropy-loss for classification, squared-error loss for regression
 learning curves, restarting training runs 
 \end{frame}
 
-
-\begin{frame}{Spatial data: 2d convolution}
-\end{frame}
-
-\begin{frame}{The channel dimension}
-\end{frame}
-
-\begin{frame}{Convolutional neural network}
-\end{frame}
 
 \begin{frame}{Encoder-Decoder architecture}
 \end{frame}
