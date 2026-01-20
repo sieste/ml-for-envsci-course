@@ -125,68 +125,90 @@
 \headcommand {\sectionentry {3}{Neural Networks}{54}{Neural Networks}{0}}
 \headcommand {\slideentry {3}{0}{1}{54/54}{}{0}}
 \headcommand {\beamer@framepages {54}{54}}
-\headcommand {\slideentry {3}{0}{2}{55/55}{}{0}}
+\headcommand {\beamer@subsectionpages {54}{54}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{55}{Multilayer Perceptron}}
+\headcommand {\slideentry {3}{1}{1}{55/55}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {55}{55}}
-\headcommand {\slideentry {3}{0}{3}{56/56}{}{0}}
+\headcommand {\slideentry {3}{1}{2}{56/56}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {56}{56}}
-\headcommand {\slideentry {3}{0}{4}{57/57}{}{0}}
+\headcommand {\slideentry {3}{1}{3}{57/57}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {57}{57}}
-\headcommand {\slideentry {3}{0}{5}{58/58}{}{0}}
+\headcommand {\slideentry {3}{1}{4}{58/58}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {58}{58}}
-\headcommand {\slideentry {3}{0}{6}{59/59}{}{0}}
+\headcommand {\slideentry {3}{1}{5}{59/59}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {59}{59}}
-\headcommand {\slideentry {3}{0}{7}{60/60}{}{0}}
+\headcommand {\slideentry {3}{1}{6}{60/60}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {60}{60}}
-\headcommand {\slideentry {3}{0}{8}{61/61}{}{0}}
+\headcommand {\slideentry {3}{1}{7}{61/61}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {61}{61}}
-\headcommand {\slideentry {3}{0}{9}{62/62}{}{0}}
+\headcommand {\slideentry {3}{1}{8}{62/62}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {62}{62}}
-\headcommand {\slideentry {3}{0}{10}{63/63}{}{0}}
+\headcommand {\slideentry {3}{1}{9}{63/63}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {63}{63}}
-\headcommand {\slideentry {3}{0}{11}{64/64}{}{0}}
+\headcommand {\slideentry {3}{1}{10}{64/64}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {64}{64}}
-\headcommand {\slideentry {3}{0}{12}{65/65}{}{0}}
+\headcommand {\slideentry {3}{1}{11}{65/65}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {65}{65}}
-\headcommand {\slideentry {3}{0}{13}{66/66}{}{0}}
+\headcommand {\slideentry {3}{1}{12}{66/66}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {66}{66}}
-\headcommand {\slideentry {3}{0}{14}{67/67}{}{0}}
+\headcommand {\slideentry {3}{1}{13}{67/67}{Multilayer Perceptron}{0}}
 \headcommand {\beamer@framepages {67}{67}}
-\headcommand {\slideentry {3}{0}{15}{68/68}{}{0}}
+\headcommand {\beamer@subsectionpages {55}{67}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{68}{Convolutional Neural Networks}}
+\headcommand {\slideentry {3}{2}{1}{68/68}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {68}{68}}
-\headcommand {\slideentry {3}{0}{16}{69/69}{}{0}}
+\headcommand {\slideentry {3}{2}{2}{69/69}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {69}{69}}
-\headcommand {\slideentry {3}{0}{17}{70/70}{}{0}}
+\headcommand {\slideentry {3}{2}{3}{70/70}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {70}{70}}
-\headcommand {\slideentry {3}{0}{18}{71/71}{}{0}}
+\headcommand {\slideentry {3}{2}{4}{71/71}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {71}{71}}
-\headcommand {\slideentry {3}{0}{19}{72/72}{}{0}}
+\headcommand {\slideentry {3}{2}{5}{72/72}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {72}{72}}
-\headcommand {\slideentry {3}{0}{20}{73/73}{}{0}}
+\headcommand {\slideentry {3}{2}{6}{73/73}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {73}{73}}
-\headcommand {\slideentry {3}{0}{21}{74/74}{}{0}}
+\headcommand {\slideentry {3}{2}{7}{74/74}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {74}{74}}
-\headcommand {\slideentry {3}{0}{22}{75/75}{}{0}}
+\headcommand {\slideentry {3}{2}{8}{75/75}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {75}{75}}
-\headcommand {\slideentry {3}{0}{23}{76/76}{}{0}}
+\headcommand {\slideentry {3}{2}{9}{76/76}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {76}{76}}
-\headcommand {\slideentry {3}{0}{24}{77/77}{}{0}}
+\headcommand {\slideentry {3}{2}{10}{77/77}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {77}{77}}
-\headcommand {\slideentry {3}{0}{25}{78/78}{}{0}}
+\headcommand {\slideentry {3}{2}{11}{78/78}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {78}{78}}
-\headcommand {\slideentry {3}{0}{26}{79/79}{}{0}}
+\headcommand {\slideentry {3}{2}{12}{79/79}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {79}{79}}
-\headcommand {\slideentry {3}{0}{27}{80/80}{}{0}}
+\headcommand {\slideentry {3}{2}{13}{80/80}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {80}{80}}
-\headcommand {\slideentry {3}{0}{28}{81/81}{}{0}}
+\headcommand {\slideentry {3}{2}{14}{81/81}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {81}{81}}
-\headcommand {\slideentry {3}{0}{29}{82/82}{}{0}}
+\headcommand {\slideentry {3}{2}{15}{82/82}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {82}{82}}
-\headcommand {\slideentry {3}{0}{30}{83/83}{}{0}}
+\headcommand {\slideentry {3}{2}{16}{83/83}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {83}{83}}
-\headcommand {\slideentry {3}{0}{31}{84/84}{}{0}}
+\headcommand {\slideentry {3}{2}{17}{84/84}{Convolutional Neural Networks}{0}}
 \headcommand {\beamer@framepages {84}{84}}
-\headcommand {\beamer@partpages {1}{84}}
-\headcommand {\beamer@subsectionpages {54}{84}}
-\headcommand {\beamer@sectionpages {54}{84}}
-\headcommand {\beamer@documentpages {84}}
-\headcommand {\gdef \inserttotalframenumber {84}}
+\headcommand {\slideentry {3}{2}{18}{85/85}{Convolutional Neural Networks}{0}}
+\headcommand {\beamer@framepages {85}{85}}
+\headcommand {\slideentry {3}{2}{19}{86/86}{Convolutional Neural Networks}{0}}
+\headcommand {\beamer@framepages {86}{86}}
+\headcommand {\slideentry {3}{2}{20}{87/87}{Convolutional Neural Networks}{0}}
+\headcommand {\beamer@framepages {87}{87}}
+\headcommand {\slideentry {3}{2}{21}{88/88}{Convolutional Neural Networks}{0}}
+\headcommand {\beamer@framepages {88}{88}}
+\headcommand {\slideentry {3}{2}{22}{89/89}{Convolutional Neural Networks}{0}}
+\headcommand {\beamer@framepages {89}{89}}
+\headcommand {\slideentry {3}{2}{23}{90/90}{Convolutional Neural Networks}{0}}
+\headcommand {\beamer@framepages {90}{90}}
+\headcommand {\slideentry {3}{2}{24}{91/91}{Convolutional Neural Networks}{0}}
+\headcommand {\beamer@framepages {91}{91}}
+\headcommand {\slideentry {3}{2}{25}{92/92}{Convolutional Neural Networks}{0}}
+\headcommand {\beamer@framepages {92}{92}}
+\headcommand {\slideentry {3}{2}{26}{93/93}{Convolutional Neural Networks}{0}}
+\headcommand {\beamer@framepages {93}{93}}
+\headcommand {\beamer@partpages {1}{93}}
+\headcommand {\beamer@subsectionpages {68}{93}}
+\headcommand {\beamer@sectionpages {54}{93}}
+\headcommand {\beamer@documentpages {93}}
+\headcommand {\gdef \inserttotalframenumber {93}}

@@ -1,7 +1,19 @@
-\frametitle{Keras}
+\frametitle{Regularisation}
+Weight-level methods to avoid overfitting:
 \begin{itemize}
-\item High-level API for building NNs, based on TensorFlow or PyTorch.
-\item Simple syntax for composing standard layers into complex deep NN architectures.
-\item Ideal for learning and prototyping.
-\item See \url{keras.io}.
+\item \textbf{Weight regularisation}: Add a term to the loss function that is proportional to the magnitude of the weights. Encouraging the optimiser to keep the weights small can avoid overfitting.
+\item \textbf{Dropout}: During training a random subset of layer outputs are set to zero. The network learns "stable" representations of the data, and generalises better.
 \end{itemize}
+
+\begin{lstlisting}[language=Python]
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras import regularizers
+
+model = Sequential([
+    Input(input_shape=(X_train.shape[1],)),
+    Dense(64, activation="relu", kernel_regularizer=regularizers.l2(1e-4)),
+    Dropout(0.3),
+    Dense(32, activation="relu", kernel_regularizer=regularizers.l2(1e-4)),
+    Dropout(0.3),
+    Dense(1) ])
+\end{lstlisting}

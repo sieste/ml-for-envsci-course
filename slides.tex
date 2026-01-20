@@ -820,6 +820,9 @@ accuracy_score(y_test, y_pred_rf)
 
 \section{Neural Networks}
 
+\subsection{Multilayer Perceptron}
+
+
 \begin{frame}{Artificial neuron (Perceptron)}
 \begin{itemize}
 \item An artificial neuron (perceptron) is a mathematical function 
@@ -953,16 +956,144 @@ More nodes (units) produce more "flexible" curves.
 \end{frame}
 
 
-\begin{frame}{Simple data example}
+\begin{frame}{Worked example: Air quality prediction}
+\begin{minipage}{.6\textwidth}
+\begin{itemize}
+\item UCI Air quality data: hourly urban gas concentration readings
+\item Ground truth (\texttt{GT}) concentrations: CO (column 3), Non-metanic hydrocarbons NMHC (5), Benzene C6H6 (6), NOx (8), NO2 (10)
+\item Sensor readings \texttt{PT08.S1...5} - CO (4), NMHC (7), NOx (9), NO2 (11), O3 (12)
+\item Meteorology: Temp. (13), Rel. Humidity (14), Abs. Humidity (15)
+\end{itemize}
+\end{minipage}%
+\begin{minipage}{.4\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{fig/mlp-example-data-1.png}\\
+\end{center}
+\end{minipage}%
+\vfill
+\begin{center}
+{\footnotesize Data Source: \url{https://archive.ics.uci.edu/dataset/360/air+quality}}
+\end{center}
 \end{frame}
 
-\begin{frame}{Model summary}
+\begin{frame}{Worked example: Air quality prediction}
+\textbf{Workflow:}
+\begin{itemize}
+\item Load data, parse data types
+\item Define target and feature columns
+\item Remove rows with missing data
+\item Construct target and feature variables
+\item Train-test split
+\item Feature scaling
+\item Initialise model architecture and optimiser
+\item Train model, tracking validation loss
+\item Evaluate model on test data
+\item Benchmark against linear regression
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Worked example: Air quality prediction}
+
+\begin{minipage}{.6\textwidth}
+\begin{lstlisting}[language=python]
+# define MLP model
+model = keras.Sequential([
+    Input(shape=(X_train.shape[1],)),
+    Dense(32, activation="relu"),
+    Dense(16, activation="relu"),
+    Dense(1)
+])
+
+# compile
+model.compile(optimizer="adam", loss="mse")
+
+# model summary
+model.summary()
+# Model: "sequential_11"
+
+#  Layer (type)       Output Shape   Param #   
+# =============================================
+#  dense_31 (Dense)   (None, 32)     288       
+#                                              
+#  dense_32 (Dense)   (None, 16)     528       
+#                                              
+#  dense_33 (Dense)   (None, 1)      17        
+#                                              
+# =============================================
+# Total params: 833 (3.25 KB)
+# Trainable params: 833 (3.25 KB)
+# Non-trainable params: 0 (0.00 Byte)
+
+\end{lstlisting}
+\end{minipage}%
+\begin{minipage}{.4\textwidth}
+\begin{center}
+\includegraphics[width=.8\textwidth]{fig/mlp-illustration-1.png}
+\end{center}
+\end{minipage}%
+
+\end{frame}
+
+\begin{frame}[fragile]{Worked example: Air quality prediction}
+Train, learning curve:
+\begin{minipage}{.6\textwidth}
+\begin{lstlisting}[language=python]
+# train model, monitoring training and 
+# validation loss
+history = model.fit(X_train, y_train, 
+                    epochs=200, batch_size=32,
+                    validation_split=0.2)
+
+# plot learning curve
+plt.plot(history.history["loss"], 
+         label="train")
+plt.plot(history.history["val_loss"], 
+         label="val")
+plt.xlabel("epoch")
+plt.ylabel("mse")
+plt.legend()
+\end{lstlisting}
+\end{minipage}%
+\begin{minipage}{.4\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{fig/mlp-example-learningcurve.png}
+\end{center}
+\end{minipage}%
+
 \end{frame}
 
 
-\begin{frame}{Loss functions}
-crossentropy-loss for classification, squared-error loss for regression
+\begin{frame}[fragile]{Worked example: Air quality prediction}
+Evaluation, benchmarking
+\begin{lstlisting}[language=python]
+# model predictions and test MSE
+yhat_test = model(X_test)
+mse = np.mean(np.square(y_test - yhat_test))
+# around 0.15 ###############################
+
+# climatology benchmark
+yhat_clim = np.mean(y_train) * np.ones_like(y_test)
+mse_clim = np.mean(np.square(y_test - yhat_clim))
+# around 1.95 ###############################
+
+# multiple linear regression benchmark
+from sklearn.linear_model import LinearRegression
+lr = LinearRegression()
+lr.fit(X_train, y_train)
+yhat_lr = lr.predict(X_test)
+mse_lr = np.mean(np.square(yhat_lr - y_test))
+# around 0.2 ###############################
+\end{lstlisting}
+
+\begin{itemize}
+\item Much better than climatology 
+\item 25\% skill compared to linear regression on the same features.
+\end{itemize}
+
 \end{frame}
+
+
+\subsection{Convolutional Neural Networks}
 
 
 \begin{frame}{Convolution}
@@ -1036,6 +1167,7 @@ crossentropy-loss for classification, squared-error loss for regression
 \end{center}
 \end{frame}
 
+
 \begin{frame}{Typical setup}
 \begin{itemize}
 \item A common situation in ML with spatial data:
@@ -1066,29 +1198,239 @@ crossentropy-loss for classification, squared-error loss for regression
 
 
 \begin{frame}{Worked example: Radar nowcasting}
-MORE HERE
+Setup:
+\begin{itemize}
+\item We want to train CNN for next frame image prediction.
+\item Training data: 1000 randomly sampled radar image sequences
+\item Input: tensor of shape \((40,40,4)\) -- 4 consecutive rain radar frames of size $40\times 40$ (resolution 5km), 15 minutes apart.
+\item Target: tensor of shape \((40,40,1)\) -- the next frame 15min ahead
+\end{itemize}
+\begin{center}
+\includegraphics[width=\textwidth]{fig/nowcasting-ex1.png}
+\end{center}
 \end{frame}
 
 
-\begin{frame}{Gradient descent}
+\begin{frame}[fragile]{Worked example: Radar Nowcasting}
+\begin{lstlisting}[language=Python]
+# input and output data
+movies = np.load('radar_movies.npy') # shape (1000,40,40,20) 
+x = movies[:, :, :, 0:4] # inputs: 4 frames
+y = movies[:, :, :, 4:5] # output: 5th frame
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+# 3 hidden (3x3) conv2d layers each with 32 units
+model = Sequential([
+  Input(shape=(40,40,4)),
+  Conv2D(32, (3,3), activation='relu', padding='same'),
+  Conv2D(32, (3,3), activation='relu', padding='same'),
+  Conv2D(32, (3,3), activation='relu', padding='same'),
+  Conv2D(1, (3,3), activation='relu', padding='same')
+])
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+model.summary()
+# Trainable params: 19,969 (78.00 KB)
+model.output_shape
+# (None, 40, 40, 1)
+
+# compile and train the model
+model.compile(optimizer='adam', loss='mse')
+model.fit(x_train, y_train)
+\end{lstlisting}
 \end{frame}
+
+\begin{frame}[fragile]{Worked example: Radar Nowcasting}
+Visualising the prediction:
+\begin{center}
+\includegraphics[width=.7\textwidth]{fig/nowcasting-pred2.png}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Worked example: Radar Nowcasting}
+Benchmarking the model:
+\begin{lstlisting}[language=Python]
+# calculate model output on test data
+y_test_pred = model.predict(x_test)
+
+# calculate test MSE 
+np.mean((y_test_pred - y_test)**2)
+# 532.405
+
+# calculate the "persistence" MSE as benchmark
+np.mean((x_test[:,:,:,3:] - y_test) ** 2)
+# 945.156
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}{Training Neural Networks}
+\textbf{Gradient descent algorithm:}
+\begin{enumerate}
+\item Initialise model weights randomly.
+\item Repeat until convergence:
+\begin{itemize}
+    \item Calculate \textbf{gradient} of the loss function with respect to model weights:
+\begin{equation*}
+\frac{\partial L}{\partial \mathbf{w}}(\mathbf{w}) = \begin{pmatrix}\frac{\partial L(\mathbf{w})}{\partial w_1}\\ \vdots \\ \frac{\partial L(\mathbf{w})}{\partial w_k}\end{pmatrix}
+\end{equation*}
+\item \textbf{Adjust weights} in the opposite direction of the gradient:
+\begin{equation*}
+\mathbf{w}^{t+1} \leftarrow \mathbf{w}^t - \gamma \frac{\partial L}{\partial \mathbf{w}}(\mathbf{w}^t)
+\end{equation*}
+where $\gamma$ is called the \textbf{learning rate}
+\end{itemize}
+\item Return weights.
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}[fragile]{Stochastic Gradient Descent (SGD)}
+\begin{itemize}
+\item In Gradient Descent, the loss and its gradient are calculated on the whole training data set.
+\item In SGD, loss and gradient are calculated on random subsets (\textbf{batches}) of the whole training data set.
+\item Random subsetting reduces computational cost of gradient calculation and improves convergence of the optimiser.
+\item The time taken to loop over the entire training data set once is called an \textbf{epoch}.
+\item A variant of SGD called the \textbf{Adam optimiser} is commonly used.
+\end{itemize}
+\vfill
+\begin{lstlisting}[language=Python]
+# optimiser, loss are specified during initialisation
+model.compile(optimizer='adam', loss='mse')
+
+# epochs and batch size are specified during training
+model.fit(X, y, epochs=100, batch_size=64)
+\end{lstlisting}
+\end{frame}
+
+
+
 
 \begin{frame}{Backpropagation}
+\begin{itemize}
+\item "Backprop" is an efficient algorithm to calculate the gradient of the loss with respect model weights
+\item Propagates loss backward from output to input layers using the chain rule of differentiation
+\item Efficiency by reusing intermediate computations
+\item More efficient than, e.g., finite differencing which requires separate loss evaluations for each weight
+\item Backpropagation exploits automatic differentiation in modern ML libraries such as PyTorch and TensorFlow
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Stochastic gradient descent}
+\begin{frame}[fragile]{Backpropagation example}
+\begin{minipage}{.6\textwidth}
+\begin{center}
+\begin{tikzpicture}[x=1.5cm, y=2.0cm, >=stealth]
+% Input Layer
+\node[draw, fill=orange!30, rounded corners, minimum width=2cm, minimum height=1cm] (I1) at (1,0) {$x_1$};
+% Hidden Layer
+\node[draw, fill=cyan!30, rounded corners, minimum width=3cm, minimum height=1cm] (H1) at (0,-.8) {$\begin{aligned}z_{1} & = w_{10} + w_{11} x_1\\h_{1}& = \text{max}(z_{1}, 0)\end{aligned}$};
+\node[draw, fill=cyan!30, rounded corners, minimum width=3cm, minimum height=1cm] (H2) at (2.2,-0.8) {$\begin{aligned}z_{2} & = w_{20} + w_{21} x_1\\h_{2}& = \text{max}(z_{2}, 0)\end{aligned}$};
+% Output Layer
+\node[draw, fill=green!30, rounded corners, minimum width=4cm, minimum height=1cm] (O) at (1,-1.7) {$\hat{y} = w_{t0} + w_{t1} h_1 + w_{t2} h_2$};
+% Loss
+\node[draw, fill=purple!30, rounded corners, minimum width=4cm, minimum height=1cm] (L) at (1,-2.5) {$\ell = (y - \hat{y})^2$};
+% Arrows from input to hidden layer
+\draw[->] (I1) to (H1);
+\draw[->] (I1) to (H2);
+% Arrows from hidden layer to output
+\draw[->] (H1) to (O);
+\draw[->] (H2) to (O);
+\draw[->] (O) to (L);
+\end{tikzpicture}
+\end{center}
+\end{minipage}%
+\begin{minipage}{.4\textwidth}
+\begin{itemize}
+\item gradient of the loss \(\ell\) wrt $w_{11}$ is
+\begin{equation*}
+\begin{aligned}
+\frac{\partial \ell}{\partial w_{11}} & = \frac{\partial \ell}{\partial \hat{y}} \times \frac{\partial \hat{y}}{\partial h_1} \times\\
+& \frac{\partial h_1}{\partial z_1} \times \frac{\partial z_1}{\partial w_{11}}
+\end{aligned}
+\end{equation*}
+\item need computational graph and derivatives
+\item PyTorch/Tensorflow do this automatically when defining a network
+\end{itemize}
+\end{minipage}%
 \end{frame}
 
 
-\begin{frame}{Optimiser hyperparameters}
+\begin{frame}[fragile]{Important hyperparameters}
+
+Important hyperparameters to explore next:
+
+\begin{lstlisting}[language=Python]
+Dense(units, activation, use_bias,
+      kernel_initializer, bias_initializer, kernel_regularizer)
+
+model.compile(optimizer, loss, metrics)
+
+model.fit(x, y,
+    batch_size, epochs,
+    initial_epoch, steps_per_epoch,
+    validation_split, validation_data, validation_freq,
+    callbacks, 
+    workers, use_multiprocessing
+)
+\end{lstlisting}
 \end{frame}
 
-\begin{frame}{Monitoring performance}
-learning curves, restarting training runs 
+
+\begin{frame}[fragile]{Early stopping}
+\begin{itemize}
+\item When validation loss gets worse we are overfitting.
+\item We should stop model training early and use the model with lowest validation loss found so far.
+\end{itemize}
+
+\begin{lstlisting}[language=Python]
+from tensorflow.keras.callbacks import EarlyStopping
+
+early_stopping = EarlyStopping(monitor="val_loss", 
+    patience=2, restore_best_weights=True)
+
+model.fit(X_train, y_train, 
+  validation_split=0.2, epochs=500, batch_size=32,
+  callbacks=[early_stop])
+\end{lstlisting}
+\begin{center}
+\includegraphics[width=.5\textwidth]{fig/early-stopping-illustration.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Regularisation}
+Weight-level methods to avoid overfitting:
+\begin{itemize}
+\item \textbf{Weight regularisation}: Add a term to the loss function that is proportional to the magnitude of the weights. Encouraging the optimiser to keep the weights small can avoid overfitting.
+\item \textbf{Dropout}: During training a random subset of layer outputs are set to zero. The network learns "stable" representations of the data, and generalises better.
+\end{itemize}
+
+\begin{lstlisting}[language=Python]
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras import regularizers
+
+model = Sequential([
+    Input(input_shape=(X_train.shape[1],)),
+    Dense(64, activation="relu", kernel_regularizer=regularizers.l2(1e-4)),
+    Dropout(0.3),
+    Dense(32, activation="relu", kernel_regularizer=regularizers.l2(1e-4)),
+    Dropout(0.3),
+    Dense(1) ])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Dimension reduction}
 \end{frame}
 
 
-\begin{frame}{Encoder-Decoder architecture}
+\begin{frame}{Pooling Layer}
+Max-pooling, average pooling
+\end{frame}
+
+\begin{frame}{Encoder architecture}
 \end{frame}
 
 \begin{frame}{Example: Weather image classification}
