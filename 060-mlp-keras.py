@@ -23,6 +23,17 @@ if not os.path.exists(csv_path):
     with zipfile.ZipFile(zip_path, "r") as z:
         z.extractall(data_dir)
 
+
+
+# load data
+data = np.genfromtxt(
+    csv_path,
+    delimiter=";",
+    skip_header=1,
+    dtype=str
+)
+
+####################
 # columns:
 # 0 Date
 # 1 Time
@@ -39,21 +50,18 @@ if not os.path.exists(csv_path):
 # 12 T
 # 13 RH
 # 14 AH
+####################
 
+data.shape # (9471, 17) - the last 2 columns are empty
 
-# load data
-data = np.genfromtxt(
-    csv_path,
-    delimiter=";",
-    skip_header=1,
-    dtype=str
-)
+data[0,:] # complete row
+data[5000, :] # a row with missing values
 
-# unify NA encoding (-200 -> '')
+# replace "-200" by "" to indicate missing value
 data[(data == '-200') | (data == '-200,0')] = ''
 
 # remove rows that are all empty
-data = data[~np.all(data == '', axis=1)]
+data = data[~np.all(data == '', axis=1)] 
 
 # store date time
 dt = np.array([
@@ -72,7 +80,6 @@ to_float = np.vectorize(to_float) # can now accept array inputs
 data = to_float(data)
 
 
-
 # extract target and features
 i_target = [2]
 i_sensor = [3,6,8,10,11]
@@ -83,9 +90,9 @@ i_xy = i_target + i_sensor + i_meteo
 # show some data
 fig, ax = plt.subplots(3, 1, sharex=True)
 ax[0].plot(dt, data[:, i_target], "-r")
-ax[0].set_title("O3 ground truth")
+ax[0].set_title("CO ground truth")
 ax[1].plot(dt, data[:, i_sensor[0]], "-b")
-ax[1].set_title("O3 sensor reading")
+ax[1].set_title("CO sensor reading")
 ax[2].plot(dt, data[:, i_meteo[1]], "-g")
 ax[2].set_title("Rel. Humidity")
 fig.autofmt_xdate(rotation=45)
@@ -103,10 +110,10 @@ y = data[:, i_target]
 X = data[:, i_sensor + i_meteo]
 
 # train / test split
-X_train, X_test, y_train, y_test = 
+X_train, X_test, y_train, y_test = \
   train_test_split(X, y, test_size=0.2, random_state=42)
 
-# scale inputs ((x - mean(x))/sd(x))
+# scale each feature by (x - mean(x))/sd(x) 
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
@@ -128,8 +135,7 @@ history = model.fit(
     X_train, y_train,
     validation_split=0.2,
     epochs=100, batch_size=32,
-    verbose=1
-)
+    verbose=1)
 
 # learning curve
 plt.plot(history.history["loss"], label="train")
@@ -151,15 +157,40 @@ print(f"Test MSE: {mse}\nClim MSE: {mse_clim}")
 
 
 
+# comparison with multiple linear regression 
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-
-# linear regression baseline
 linreg = LinearRegression()
 linreg.fit(X_train, y_train)
 yhat_lr = linreg.predict(X_test)
 mse_test_lr = np.mean(np.square(yhat_lr - y_test))
-print(f"MLP MSE: {mse_test}\nLR MSE: {mse_test_lr}")
+print(f"MLP MSE: {mse}\nLR MSE: {mse_test_lr}")
+
+
+# plot some model outputs
+X_full = scaler.transform(X)
+yhat_full = model(X_full)
+yhat_lr_full = linreg.predict(X_full)
+
+inds = 50
+plt.plot(dt[:inds], y[:inds,0], label='target')
+plt.plot(dt[:inds], yhat_full[:inds,0], label='MLP')
+plt.plot(dt[:inds], yhat_lr_full[:inds,0], label='Linear regression')
+plt.legend()
+plt.tight_layout()
+plt.ylabel('CO concentration')
+fig = plt.gcf()
+fig.autofmt_xdate(rotation=45)
+plt.show()
+
+ax[0].set_title("CO ground truth")
+ax[1].plot(dt, data[:, i_sensor[0]], "-b")
+ax[1].set_title("CO sensor reading")
+ax[2].plot(dt, data[:, i_meteo[1]], "-g")
+ax[2].set_title("Rel. Humidity")
+plt.tight_layout()
+plt.show()
+
 
 
 
