@@ -835,7 +835,7 @@ accuracy_score(y_test, y_pred_rf)
 \item \(b\) is the bias
 \item \(\varphi(\cdot)\) is the activation function
 \end{itemize}
-\item A neuron takes inputs \(\fat{x}=(x_1, \dots, x_k)\), calculates a \textbf{linear combination}, and applies a non-linear activation function.
+\item A neuron takes inputs \(\fat{x}=(x_1, \dots, x_k)\), calculates a \textbf{linear combination}, and applies a \textbf{non-linear activation function}.
 \end{itemize}
 \end{frame}
 
@@ -943,6 +943,17 @@ More nodes (units) produce more "flexible" curves.
 \item PyTorch is used in research, TF more widely used in production.
 \item See \url{pytorch.org} and \url{tensorflow.org}.
 \end{itemize}
+\vfill
+\begin{minipage}{.5\textwidth}
+\begin{center}
+\includegraphics[width=.8\textwidth]{fig/pytorch.png}
+\end{center}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\begin{center}
+\includegraphics[width=.8\textwidth]{fig/tensorflow.png}
+\end{center}
+\end{minipage}%
 \end{frame}
 
 
@@ -953,23 +964,33 @@ More nodes (units) produce more "flexible" curves.
 \item Ideal for learning and prototyping.
 \item See \url{keras.io}.
 \end{itemize}
+\begin{center}
+\includegraphics[width=.6\textwidth]{fig/keras.png}
+\end{center}
 \end{frame}
 
 
 \begin{frame}{Worked example: Air quality prediction}
+\begin{itemize}
+\item \textbf{UCI Air quality data}: Hourly urban gas concentration readings
+\end{itemize}
+\vfill
 \begin{minipage}{.6\textwidth}
 \begin{itemize}
-\item UCI Air quality data: hourly urban gas concentration readings
-\item Ground truth (\texttt{GT}) concentrations: CO (column 3), Non-metanic hydrocarbons NMHC (5), Benzene C6H6 (6), NOx (8), NO2 (10)
-\item Sensor readings \texttt{PT08.S1...5} - CO (4), NMHC (7), NOx (9), NO2 (11), O3 (12)
-\item Meteorology: Temp. (13), Rel. Humidity (14), Abs. Humidity (15)
+\item \textbf{Ground truth} (\texttt{GT}) concentrations: CO (column 3), Non-methanic hydrocarbons NMHC (5), Benzene C6H6 (6), NOx (8), NO2 (10)
+\item \textbf{Sensor readings} \texttt{PT08.S1...5} - CO (4), NMHC (7), NOx (9), NO2 (11), O3 (12)
+\item \textbf{Meteorology}: Temp. (13), Rel. Humidity (14), Abs. Humidity (15)
 \end{itemize}
 \end{minipage}%
 \begin{minipage}{.4\textwidth}
 \begin{center}
-\includegraphics[width=\textwidth]{fig/mlp-example-data-1.png}\\
+\includegraphics[width=.9\textwidth]{fig/mlp-example-data-1.png}\\
 \end{center}
 \end{minipage}%
+\vfill
+\begin{itemize}
+\item \textbf{Goal}: Train a NN that predicts ground truth of one pollutant from all sensor readings and meteorological variables. 
+\end{itemize}
 \vfill
 \begin{center}
 {\footnotesize Data Source: \url{https://archive.ics.uci.edu/dataset/360/air+quality}}
@@ -1035,16 +1056,17 @@ model.summary()
 \end{frame}
 
 \begin{frame}[fragile]{Worked example: Air quality prediction}
-Train, learning curve:
+
 \begin{minipage}{.6\textwidth}
+\textbf{Train model}:
 \begin{lstlisting}[language=python]
-# train model, monitoring training and 
-# validation loss
 history = model.fit(X_train, y_train, 
                     epochs=200, batch_size=32,
                     validation_split=0.2)
+\end{lstlisting}
 
-# plot learning curve
+\textbf{Plot learning curve}:
+\begin{lstlisting}[language=python]
 plt.plot(history.history["loss"], 
          label="train")
 plt.plot(history.history["val_loss"], 
@@ -1114,6 +1136,11 @@ mse_lr = np.mean(np.square(yhat_lr - y_test))
 
 
 \begin{frame}{Convolution}
+\begin{itemize}
+\item The local, shared combination weights are stored in a \textbf{convolution kernel}
+\item Usually kernels are \(3\times 3\) or \(5 \times 5\), we're using the less common \(2\times 2\) for illustration here.
+\item Boundary conditions need to be considered later.
+\end{itemize}
 \begin{center}
 \includegraphics[width=.5\textwidth]{fig/cnn-illustration-1.png}
 \end{center}
@@ -1121,7 +1148,7 @@ mse_lr = np.mean(np.square(yhat_lr - y_test))
 
 \begin{frame}{Convolution}
 \begin{itemize}
-\item The input data usually have multiple channels (color channels, pressure levels, variables)
+\item The input data usually have \textbf{multiple channels} (variables, color channels, pressure levels)
 \item The convolution kernel must have the same number of channels as the input data.
 \end{itemize}
 \vfill
@@ -1132,15 +1159,15 @@ mse_lr = np.mean(np.square(yhat_lr - y_test))
 
 \begin{frame}{Convolution}
 \begin{itemize}
-\item By defining multiple convolution kernels, we produce multiple output channels from the same input.
+\item By defining multiple convolution kernels, we produce \textbf{multiple output channels} from the same input channels.
 \end{itemize}
 \vfill
 \begin{center}
 \includegraphics[width=.6\textwidth]{fig/cnn-illustration-3.png}
 \end{center}
 \begin{itemize}
-\item This is the typical setup for a 2d convolution layer in a convolutional neural network.
-\item The trainable parameters in a 2d convolution are stored in a 4d data structure with dimensions (width, height, input channels, output channels).
+\item This is the \textbf{typical situation for 2d convolution} in a convolutional neural network.
+\item The \textbf{trainable parameters} in a 2d convolution are stored in a 4d data structure with dimensions (width, height, input channels, output channels).
 \end{itemize}
 \end{frame}
 
@@ -1148,18 +1175,20 @@ mse_lr = np.mean(np.square(yhat_lr - y_test))
 
 \begin{frame}{Convolution}
 
+\textbf{Convolution mathematically}:
+
 \begin{itemize}
-\item inputs \(x[i,j,c]\) indexed by space \((i,j)\) and channel \(c=1,\dots,C\)
-\item outputs \(y[i,j]\) indexed by space \((i,j)\)
-\item kernel \(k[m,n,c]\) of width and height \(m = -w,\dots,+w\) and \(C\) channels
+\item inputs \(x[i,j,c]\) indexed by space \((i,j)\) and input channel \(c=1,\dots,C\)
+\item outputs \(y[i,j,d]\) indexed by space \((i,j)\) and output channel \(d=1,\dots,D\)
+\item kernel \(k[m,n,c,d]\) of width and height \(m = -w,\dots,+w\), \(C\) input channels, \(D\) output channels
 \end{itemize}
-\[y[i,j] = \sum_{m = -w}^{w} \sum_{n = -w}^{w} \sum_{c=1}^C k[m,n,c] \cdot x[i+m,j+n,c]\]
+\[y[i,j,d] = \sum_{m = -w}^{w} \sum_{n = -w}^{w} \sum_{c=1}^C k[m,n,c,d] \cdot x[i+m,j+n,c]\]
 \end{frame}
 
 
 \begin{frame}{Convolution}
 \begin{itemize}
-\item Convolution layers can be chained to produce a deep convolutional neural network (Deep CNN).
+\item 2D-convolutions can be chained into layers of a \textbf{Deep Convolutional Neural Network} (Deep CNN).
 \end{itemize}
 \vfill
 \begin{center}
