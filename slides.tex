@@ -924,8 +924,8 @@ More nodes (units) produce more "flexible" curves.
 \item \textbf{Bias}: trainable offset added to the weighted sum
 \item \textbf{Pre-activation}: linear combination $z = \fat{w}\cdot\fat{x} + b$
 \item \textbf{Activation function}: nonlinear function applied to pre-activation
-\item \textbf{Input layer}: layer providing the input features 
-\item \textbf{Output layer}: final layer producing the model output(s)
+\item \textbf{Input layer}: First layer that accepts the input features 
+\item \textbf{Output layer}: Final layer that produces the model output(s)
 \item \textbf{Hidden layer(s)}: layer(s) between input and output layers
 \item \textbf{Parameters}: all trainable weights and biases of the network
 \item \textbf{Forward pass}: computation of outputs from inputs by the network
@@ -937,10 +937,11 @@ More nodes (units) produce more "flexible" curves.
 
 \begin{frame}[fragile]{PyTorch, TensorFlow}
 \begin{itemize}
-\item Low-level frameworks for implementing neural networks.
-\item Automatic differentiation, backpropagation.
+\item PyTorch and Tensorflow are "low-level" frameworks for implementing neural networks.
+\item Automatic differentiation and backpropagation.
 \item Fast training on multicore CPUs and GPUs "out of the box".
 \item PyTorch is used in research, TF more widely used in production.
+\item Both can be used as a high-performance alternative to \texttt{numpy}.
 \item See \url{pytorch.org} and \url{tensorflow.org}.
 \end{itemize}
 \vfill
@@ -959,10 +960,11 @@ More nodes (units) produce more "flexible" curves.
 
 \begin{frame}[fragile]{Keras}
 \begin{itemize}
-\item High-level API for building NNs, based on TensorFlow or PyTorch.
-\item Simple syntax for composing standard layers into complex deep NN architectures.
-\item Ideal for learning and prototyping.
+\item High-level API for building NNs, based on TensorFlow.
+\item Simple syntax and functions to compose "standard NN layers" into complex deep NN architectures.
+\item Ideal for learning and prototyping, and commonly used in research and applications.
 \item See \url{keras.io}.
+\vfill
 \end{itemize}
 \begin{center}
 \includegraphics[width=.6\textwidth]{fig/keras.png}
@@ -998,18 +1000,18 @@ More nodes (units) produce more "flexible" curves.
 \end{frame}
 
 \begin{frame}{Worked example: Air quality prediction}
-\textbf{Workflow:}
+\textbf{Workflow overview:}
 \begin{itemize}
-\item Load data, parse data types
+\item Load raw data, parse data types
 \item Define target and feature columns
 \item Remove rows with missing data
 \item Construct target and feature variables
 \item Train-test split
 \item Feature scaling
 \item Initialise model architecture and optimiser
-\item Train model, tracking validation loss
+\item Train model, while tracking validation loss
 \item Evaluate model on test data
-\item Benchmark against linear regression
+\item Benchmark against climatology and linear regression
 \end{itemize}
 \end{frame}
 
@@ -1056,7 +1058,6 @@ model.summary()
 \end{frame}
 
 \begin{frame}[fragile]{Worked example: Air quality prediction}
-
 \begin{minipage}{.6\textwidth}
 \textbf{Train model}:
 \begin{lstlisting}[language=python]
@@ -1078,7 +1079,7 @@ plt.legend()
 \end{minipage}%
 \begin{minipage}{.4\textwidth}
 \begin{center}
-\includegraphics[width=\textwidth]{fig/mlp-example-learningcurve.png}
+\includegraphics[width=.9\textwidth]{fig/mlp-example-learningcurve.png}
 \end{center}
 \end{minipage}%
 
@@ -1086,7 +1087,7 @@ plt.legend()
 
 
 \begin{frame}[fragile]{Worked example: Air quality prediction}
-Evaluation, benchmarking
+Evaluation, benchmarking:
 \begin{lstlisting}[language=python]
 # model predictions and test MSE
 yhat_test = model(X_test)
@@ -1111,6 +1112,25 @@ mse_lr = np.mean(np.square(yhat_lr - y_test))
 \item Much better than climatology 
 \item 25\% skill compared to linear regression on the same features.
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Worked example: Air quality prediction}
+
+\begin{minipage}{.5\textwidth}
+\begin{center}
+\textbf{Example model output}
+\includegraphics[width=.9\textwidth]{fig/mlp-example-output-1.png}
+\end{center}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\textbf{Next steps:}
+\begin{itemize}
+\item Retrain the NN with a different architecture (hidden layers, nodes per layer, activation function). 
+\item Retrain the NN with different subsets of features.
+\item Document changes in performance and interpret the results.
+\end{itemize}
+\end{minipage}%
 
 \end{frame}
 
@@ -1217,11 +1237,15 @@ mse_lr = np.mean(np.square(yhat_lr - y_test))
 \end{frame}
 
 
-\begin{frame}{Examples}
+\begin{frame}{CNN example applications}
+\begin{center}
+\includegraphics[width=.9\textwidth]{fig/cnn-illustration-5.png}
+\end{center}
 \begin{itemize}
-\item Hazard prediction: MORE HERE
-\item Image segmentation: MORE HERE
-\item Next-time step prediction: MORE HERE
+\item Spatial classification of vegetation types
+\item Hazard maps
+\item Image segmentation
+\item Next-time step prediction
 \end{itemize}
 \end{frame}
 
@@ -1451,25 +1475,211 @@ model = Sequential([
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}{Dimension reduction}
+\begin{frame}{CNN for image classification}
+\begin{itemize}
+\item Goal: Learn to assign one of \(k\) labels to an input image
+\item Application: Classify the animal shown in a photograph
+\item Output: vector of length \(k\) containing class probabilities
+\item Need to be able to reduce dimension of input to produce the output
+\end{itemize}
+\begin{center}
+\includegraphics[width=.6\textwidth]{fig/cnn-illustration-6.png}
+\end{center}
 \end{frame}
 
 
 \begin{frame}{Pooling Layer}
-Max-pooling, average pooling
+\begin{itemize}
+\item A pooling layer reduces spatial resolution by calculating windowed summaries
+\item Max-pooling is most common, but average-pooling, variance-pooling and others exist
+\item Pooling layers (usually) have no trainable parameters.
+\end{itemize}
+\begin{center}
+\includegraphics[width=.6\textwidth]{fig/cnn-maxpooling-1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Flatten Layer}
+\begin{itemize}
+\item A flatten layer reshapes the input by collapsing all spatial and channel data into a 1d vector
+\item Flatten has no trainable parameters.
+\end{itemize}
+\begin{center}
+\includegraphics[width=.4\textwidth]{fig/flatten-illustration-1.png}
+\end{center}
 \end{frame}
 
 \begin{frame}{Encoder architecture}
+\begin{itemize}
+\item An encoder architecture is a chain of convolution and pooling layers, usually ending in a densely connected MLP, to transform high-dimensional inputs to low dimensional outputs.
+\end{itemize}
+\begin{center}
+\includegraphics[width=\textwidth]{fig/cnn-illustration-7.png}
+\end{center}
 \end{frame}
 
-\begin{frame}{Example: Weather image classification}
+\begin{frame}{Training a multi-class classifier}
+\textbf{Softmax output}
+\begin{itemize}
+\item We want our model to output a vector of probabilities that sum to one.
+\item This is achieved by the \textbf{softmax activation function} that takes arbitrary inputs \(x_1, \dots, x_k\) and outputs a vector with \(i\)-th element
+\[softmax(x_1, \dots, x_k)_i = \frac{e^{x_i}}{\sum_{j=1}^k e^{x_j}}\]
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Cross-validation, early stopping}
+
+\begin{frame}{Training a multi-class classifier}
+\textbf{One-hot-encoding}
+\begin{itemize}
+\item To train a multi-class classifier, we one-hot-encode our target labels.
+\item If a target takes \(1\) out of \(k\) possible classes, the one-hot-encoding is a vector of length \(k\), where the element in the target class position is \(1\) and all other elements are \(0\)
+\item For example, when there are \(5\) possible classes, a target with class label \(4\) is one-hot-encoded by the vector \[\fat{y} = (0, 0, 0, 1, 0)\]
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Dropout}
+\begin{frame}{Training a multi-class classifier}
+\textbf{Categorical cross entropy loss}
+\begin{itemize}
+\item Cross entropy is a loss function to train classifiers that output a vector of probabilities \(\hat{\fat{y}} = (\hat{y}_1, \dots, \hat{y}_k)\) of length \(k\) and the corresponding target \(\fat{y} = (y_1, \dots, y_k)\) is one-hot-encoded.
+\item Cross entropy loss is given by \[L(\hat{\fat{y}}, \fat{y}) = -\sum_{i=1}^k y_i \log(\hat{y}_i)\]
+\item In words: The negative logarithm of the probability assigned to the correct class.
+\end{itemize}
 \end{frame}
+
+\begin{frame}{Example: Animal image classification}
+\begin{itemize}
+\item We want to train an encoder-based image classifier that takes as input an RGB image of dimension 100x100 pixels and outputs a vector of 3 probabilities for class labels "butterfly", "chicken", and "elephant"
+\end{itemize}
+\begin{center}
+\includegraphics[width=.8\textwidth]{fig/cnn-encoder-1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Animal image classification}
+\textbf{Loading, scaling, one-hot-encoding}:
+\begin{lstlisting}[language=Python]
+# load the stored data
+images = np.load('data/animal-images.npy', allow_pickle=True) # shape (1500,100,100,3)
+labels = np.load('data/animal-labels.npy', allow_pickle=True) # shape (1500,)
+
+# min-max scaling
+X = images.astype("float32") / 255.0
+
+# one-hot encoding of class labels
+le = LabelEncoder()
+y_int = le.fit_transform(labels) # vector of 0/1/2
+ohe = OneHotEncoder(sparse_output=False)
+y = ohe.fit_transform(y_int.reshape(-1,1)) # matrix with 3 columns
+
+# array([[0., 1., 0.],
+#        [0., 1., 0.],
+#        [0., 1., 0.],
+#        ...,
+#        [1., 0., 0.],
+#        [1., 0., 0.],
+#        [1., 0., 0.]])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Animal image classification}
+\textbf{Define model, optimiser, loss function}
+\begin{lstlisting}[language=Python]
+# define encoder architecture
+model = Sequential([
+    Input(shape=X_train.shape[1:]),
+    Conv2D(64, (3, 3), activation="relu"),
+    MaxPooling2D((2, 2)),
+    Conv2D(32, (3, 3), activation="relu"),
+    MaxPooling2D((2, 2)),
+    Conv2D(16, (3, 3), activation="relu"),
+    MaxPooling2D((2, 2)),
+    Flatten(),
+    Dense(128, activation="relu"),
+    Dense(y.shape[1], activation="softmax")
+])
+
+# define optimiser and loss function
+model.compile(
+    optimizer="adam",
+    loss="categorical_crossentropy",
+    metrics=["accuracy"]
+)
+\end{lstlisting}
+\textbf{Note:} The combination of softmax activation at the output layer and categorical cross entropy loss ensures that the model is trained to output a vector of class probabilities 
+\end{frame}
+
+\begin{frame}[fragile]{Example: Animal image classification}
+\textbf{Train with early stopping}
+\begin{lstlisting}[language=Python]
+early_stop = EarlyStopping(
+    monitor="val_loss", patience=5, restore_best_weights=True)
+
+model.fit(X_train, y_train, epochs=50, batch_size=32,
+    validation_split=0.2, callbacks=[early_stop])
+
+# Epoch 1/50
+# loss: 1.05 - accuracy: 0.39 - val_loss: 0.88 - val_accuracy: 0.59
+# Epoch 2/50
+# loss: 0.82 - accuracy: 0.60 - val_loss: 0.70 - val_accuracy: 0.72
+# .....
+# Epoch 7/50
+# loss: 0.45 - accuracy: 0.81 - val_loss: 0.47 - val_accuracy: 0.74
+# .....
+# Epoch 12/50
+# loss: 0.22 - accuracy: 0.91 - val_loss: 0.62 - val_accuracy: 0.80
+# Epoch 13/50
+# loss: 0.17 - accuracy: 0.94 - val_loss: 0.48 - val_accuracy: 0.83
+\end{lstlisting}
+\begin{itemize}
+\item Optimiser stops early after 13 epochs.
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Example: Animal image classification}
+
+\textbf{Some good results:}
+\vfill
+\includegraphics[width=.3\textwidth]{fig/cnn-classifier-result-7.png}
+\includegraphics[width=.3\textwidth]{fig/cnn-classifier-result-5.png}
+\includegraphics[width=.3\textwidth]{fig/cnn-classifier-result-6.png}
+\end{frame}
+
+\begin{frame}{Example: Animal image classification}
+
+\textbf{Some not so good results:}
+\vfill
+\includegraphics[width=.3\textwidth]{fig/cnn-classifier-result-2.png}
+\includegraphics[width=.3\textwidth]{fig/cnn-classifier-result-3.png}
+\includegraphics[width=.3\textwidth]{fig/cnn-classifier-result-4.png}
+\end{frame}
+
+
+\begin{frame}[fragile]{Example: Animal image classification}
+\textbf{Confusion matrix}
+
+\begin{lstlisting}[language=Python]
+# calculate most likely class
+y_pred_prob = model.predict(X_test)
+y_pred = np.argmax(y_pred_prob, axis=1)
+y_true = np.argmax(y_test, axis=1)
+
+# confusion matrix
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+cm = confusion_matrix(y_true, y_pred)
+disp = ConfusionMatrixDisplay(
+    confusion_matrix=cm,
+    display_labels=le.classes_
+)
+disp.plot(cmap="Blues", values_format="d")
+\end{lstlisting}
+\begin{center}
+\includegraphics[width=.4\textwidth]{fig/cnn-classifier-confusion-matrix.png}
+\end{center}
+\end{frame}
+
+
 
 
 \begin{frame}{Further Reading}

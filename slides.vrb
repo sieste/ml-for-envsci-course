@@ -1,19 +1,21 @@
-\frametitle{Regularisation}
-Weight-level methods to avoid overfitting:
-\begin{itemize}
-\item \textbf{Weight regularisation}: Add a term to the loss function that is proportional to the magnitude of the weights. Encouraging the optimiser to keep the weights small can avoid overfitting.
-\item \textbf{Dropout}: During training a random subset of layer outputs are set to zero. The network learns "stable" representations of the data, and generalises better.
-\end{itemize}
+\frametitle{Example: Animal image classification}
+\textbf{Confusion matrix}
 
 \begin{lstlisting}[language=Python]
-from tensorflow.keras.layers import Dropout
-from tensorflow.keras import regularizers
+# calculate most likely class
+y_pred_prob = model.predict(X_test)
+y_pred = np.argmax(y_pred_prob, axis=1)
+y_true = np.argmax(y_test, axis=1)
 
-model = Sequential([
-    Input(input_shape=(X_train.shape[1],)),
-    Dense(64, activation="relu", kernel_regularizer=regularizers.l2(1e-4)),
-    Dropout(0.3),
-    Dense(32, activation="relu", kernel_regularizer=regularizers.l2(1e-4)),
-    Dropout(0.3),
-    Dense(1) ])
+# confusion matrix
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+cm = confusion_matrix(y_true, y_pred)
+disp = ConfusionMatrixDisplay(
+    confusion_matrix=cm,
+    display_labels=le.classes_
+)
+disp.plot(cmap="Blues", values_format="d")
 \end{lstlisting}
+\begin{center}
+\includegraphics[width=.4\textwidth]{fig/cnn-classifier-confusion-matrix.png}
+\end{center}
