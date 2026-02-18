@@ -2,7 +2,6 @@ import os
 import random
 import matplotlib.pyplot as plt
 import numpy as np
-from PIL import Image
 
 # # The code below generates the data used in the course lecture. You can
 # # adapt the code to create your own training data.
@@ -13,6 +12,7 @@ from PIL import Image
 # # moved/renamed the directory to data/animals-10-raw-img (base_dir below)
 # # 
 # # translate.py contains the following dictionary:
+# from PIL import Image
 # translate = {"cane": "dog", "cavallo": "horse", "elefante": "elephant", "farfalla": "butterfly", "gallina": "chicken", "gatto": "cat", "mucca": "cow", "pecora": "sheep", "scoiattolo": "squirrel", "dog": "cane", "cavallo": "horse", "elephant" : "elefante", "butterfly": "farfalla", "chicken": "gallina", "cat": "gatto", "cow": "mucca", "spider": "ragno", "squirrel": "scoiattolo"}
 # base_dir = "data/animals-10-raw-img"
 # classes_en = ["chicken", "elephant", "butterfly"]

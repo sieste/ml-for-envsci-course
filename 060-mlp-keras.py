@@ -183,16 +183,6 @@ fig = plt.gcf()
 fig.autofmt_xdate(rotation=45)
 plt.show()
 
-ax[0].set_title("CO ground truth")
-ax[1].plot(dt, data[:, i_sensor[0]], "-b")
-ax[1].set_title("CO sensor reading")
-ax[2].plot(dt, data[:, i_meteo[1]], "-g")
-ax[2].set_title("Rel. Humidity")
-plt.tight_layout()
-plt.show()
-
-
-
 
 # next steps: impute missing values with (training) mean and provide a
 # missingness mask as an input to the NN

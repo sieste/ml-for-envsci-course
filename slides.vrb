@@ -1,21 +1,7 @@
-\frametitle{Example: Animal image classification}
-\textbf{Confusion matrix}
-
-\begin{lstlisting}[language=Python]
-# calculate most likely class
-y_pred_prob = model.predict(X_test)
-y_pred = np.argmax(y_pred_prob, axis=1)
-y_true = np.argmax(y_test, axis=1)
-
-# confusion matrix
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-cm = confusion_matrix(y_true, y_pred)
-disp = ConfusionMatrixDisplay(
-    confusion_matrix=cm,
-    display_labels=le.classes_
-)
-disp.plot(cmap="Blues", values_format="d")
-\end{lstlisting}
+\frametitle{Advanced Architecture: U-Net}
 \begin{center}
-\includegraphics[width=.4\textwidth]{fig/cnn-classifier-confusion-matrix.png}
+\includegraphics[width=.9\textwidth]{fig/unet-cnn-comparison.png}
 \end{center}
+\begin{itemize}
+\item The U-Net is (somewhat) better able to replicate the spatial variability of the target.
+\end{itemize}

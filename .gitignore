@@ -1,6 +1,9 @@
 random-forest/
 venv/
+venv311/
 data/animals-10-raw-img/
 data/animals-10.zip
+*.zip
+
 
 

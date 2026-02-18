@@ -1,0 +1,68 @@
+Hi all,
+
+I look forward to meeting you all for the Introduction to Machine Learning
+workshop on the 10 and 11 February in Exeter. 
+
+To attend the course you will need to bring a laptop that can run python code.
+Code will be provided as .py plain text files during the course, please make
+sure you can run parts of py files in an interactive session and inspect the
+output. I assume you have a preferred way of writing and running python code,
+eg Spyder IDE or Jupyter Notebooks. If you have never coded in python before
+please get in touch with me ASAP.
+
+We will use the following python and library versions for the course, and you
+should make sure these are installed before attending:
+
+python==3.11
+matplotlib==3.8.4
+numpy==1.26.4
+scikit-learn==1.4.2
+xgboost==2.0.3
+tensorflow==2.15.0
+
+Other version combinations might work as well, but this combination has been
+verified to work. To check all libraries are installed and work correctly on
+your computer, please make sure the following code runs without any error
+messages (warnings are ok):
+
+
+import numpy as np
+import sklearn
+import xgboost as xgb
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
+# numpy
+a = np.array([1, 2, 3])
+np.mean(a) 
+
+# sklearn
+from sklearn.linear_model import LinearRegression
+lr = LinearRegression().fit([[0], [1], [2]], [0, 1, 2])
+lr.predict([[3]])[0]  
+
+# xgboost
+X = np.array([[0], [1], [2], [3]])
+y = np.array([0, 1, 2, 3])
+model = xgb.XGBRegressor(n_estimators=5, max_depth=2)
+model.fit(X, y)
+model.predict([[4]])
+
+# keras / tensorflow
+model = keras.Sequential([
+    layers.Dense(8, activation="relu", input_shape=(1,)),
+    layers.Dense(1)
+])
+model.compile(optimizer="adam", loss="mse")
+model.fit(X, y, epochs=2, verbose=0)
+model.predict([[5]])
+
+
+If you encounter any issues, please get in touch ASAP so we can sort them out
+before the course.
+
+All the best,
+Stefan
+
+
